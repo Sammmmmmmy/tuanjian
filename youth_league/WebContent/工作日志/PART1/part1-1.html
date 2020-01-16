@@ -8,19 +8,22 @@
 </head>
 
 <!-- <body onbeforeunload="return notSaved()"> -->
-    <body>
+
+<body>
     <!-- 基本概况/ -->
-    <div class="basic">
-        <div class="title">
-            <div class="title-circle">
-                <span>1</span>
-            </div>
-            <div class="title-words">
-                <p class="font-1">团支部建设</p>
-                <p class="font-2">INSTRODUCTION</p>
-            </div>
+
+    <div class="title">
+        <div class="title-circle">
+            <span>1</span>
         </div>
-        <div id="basic" class="input" contenteditable placeholder="请输入文字">
+        <div class="title-words">
+            <p class="font-1">团支部建设</p>
+            <p class="font-2">INSTRODUCTION</p>
+        </div>
+    </div>
+    <div class="basic">
+        <p style="margin: 0 auto;width: 80px;">基本概况</p>
+        <div id="basic" class="input" contenteditable placeholder="请输入文字"></div>
     </div>
     <!-- 支部特色/ -->
     <div class="special">
@@ -32,7 +35,7 @@
     <div class="innovation">
         <p style="margin: 0 auto;width: 80px;">工作创新</p>
         <div id="innovation" class="input" contenteditable placeholder="请输入文字"></div>
-        </div>
+    </div>
     </div>
     <!-- 目标理想/ -->
     <div class="goal">
@@ -46,22 +49,18 @@
 </body>
 <script type="text/javascript" src="../scripts/jquery.js"></script>
 <script>
-    //获取class
     var Class = "";
     Class = sessionStorage.getItem("class");
 
     //在页面加载完毕的时候，使用方法调出数据填入目标
     console.log(Class);
-    document.onload = function () {
+    window.onload = function () {
         $.ajax({
             type: 'POST',
-            url: 'Servlet/part1_1',
+            url: 'servlet/part1_1',
             data: {
                 "flag": 0, //查询数据
-                "json": {
-                    "Class": Class
-                }
-
+                "Class": Class
             },
             success: function (data, status) {
                 console.log("团支部建设，查询数据");
@@ -70,7 +69,7 @@
                 $("#innovation").innerText() = data.innovation;
                 $("#goal").innerText() = data.goal;
             },
-            error:function(data,status){
+            error: function (data, status) {
                 alert("查询数据失败，请联系管理员~");
             }
         })
@@ -81,28 +80,28 @@
     function submit() {
         $.ajax({
             type: 'POST',
-            url:"Servlet/part1_1",
-            data:
-            	{
+            url: 'servlet/part1_1',
+            data: {
                 "flag": 1, //发送数据
-                "Class": ,
-                "basic": $("#basic").text(),
-                "specialty": $("#specialty").text(),
-                "innovation": $("#innovation").text(),
-                "goal": $("#goal").text()
-                },
-            success: function (data,status) {
+                "json": {
+                    "class": Class,
+                    "basic": $("#basic").text(),
+                    "specialty": $("#specialty").text(),
+                    "innovation": $("#innovation").text(),
+                    "goal": $("#goal").text()
+                }
+            },
+            success: function (data, status) {
                 console.log("上传数据成功");
             },
-            error:function(data,status){
+            error: function (data, status) {
                 console.log("上传数据失败，请联系管理员~");
             }
         });
-        
     }
 
     //在窗口要离开时，比对数据是否修改，修改却未保存，就弹出确认框
-    $(window).bind('beforeunload',function(){
+    $(window).bind('beforeunload', function () {
         submit();
     });
 
