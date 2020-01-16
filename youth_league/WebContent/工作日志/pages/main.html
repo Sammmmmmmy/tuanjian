@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>山东大学团支部工作日志</title>
+    <link href="../styles/all.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="top">
+        <img src="../images/校徽.png" class="top-img-1">
+        <img src="../images/山东大学.png" class="top-img-2">
+        <img src="../images/年度团支部工作日志.png" class="top-img-3">
+        <hr style="margin: 0;">
+    </div>
+    <div id="login">
+        <div class="row">
+            <div class="login">
+                <form action="#" class="outside-form">
+                    <h2>登录</h2>
+                    <div class="form-group">
+                        <select class="class-select" id="classSelect">
+                            <option value="2018-1">2018-1</option>
+                            <option value="2018-2">2018-2</option>
+                            <option value="2018-3">2018-3</option>
+                            <option value="2018-4">2018-4</option>
+                            <option value="2018-5">2018-5</option>
+                            <option value="2018-6">2018-6</option>
+                            <option value="2018-7">2018-7</option>
+                            <option value="2018-8">2018-9</option>
+                            <option value="2018-AI">2018-AI</option>
+                            <option value="2018-大数据">2018-大数据</option>
+                        </select>
+                        <!-- <label for="name">name</label>
+                                <input type="text" class="form-control" id="name" placeholder="用户名" autocomplete="off"> -->
+                    </div>
+                    <div class="form-group">
+                        <label for="password">password</label>
+                        <input type="password" class="form-control" id="password" placeholder="密码" autocomplete="off">
+                    </div>
+                </form>
+                <div class="form-group form-group-bottom">
+                    <button class="btn btn-primary" onclick="login()">登录</button>
+                    <p class="form-group-display">
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <div class="nav" id="nav">
+        <button class="nav-part" id="pre" onclick="pre()">前言及基本资料></button>
+        <a href="../pages/pre-1.html" target="iframe1" id="pre-1" class="nav-part-a" >工作日志</a>
+        <a href="../pages/pre-2.html" target="iframe1" id="pre-2" class="nav-part-a" hidden>中国共青团团歌</a>
+        <a href="../pages/pre-3.html" target="iframe1" id="pre-3" class="nav-part-a" hidden>入团誓词</a>
+        <a href="../pages/pre-4.html" target="iframe1" id="pre-4" class="nav-part-a" hidden>填写说明</a>
+        <a href="../pages/pre-5.html" target="iframe1" id="pre-5" class="nav-part-a" hidden>团支部资料</a>
+        <button class="nav-part" id="part1" onclick="part1()">PART1></button>
+        <a href="../PART1/part1-1.html" target="iframe1" id="part1-1" class="nav-part-a" hidden>团支部建设</a>
+        <a href="../PART1/part1-2.html" target="iframe1" id="part1-2" class="nav-part-a" hidden>注册团员名单</a>
+        <a href="../PART1/part1-4.html" target="iframe1" id="part1-3" class="nav-part-a" hidden>工作事宜</a>
+        <a href="../PART1/part1-6.html" target="iframe1" id="part1-4" class="nav-part-a" hidden>另设</a>
+        <a href="../PART1/part1-7.html" target="iframe1" id="part1-5" class="nav-part-a" hidden>团支部风采</a>
+        <a href="../PART1/part1-8.html" target="iframe1" id="part1-6" class="nav-part-a" hidden>年度团支部选举记录</a>
+        <a href="../PART1/part1-14.html" target="iframe1" id="part1-7" class="nav-part-a" hidden>年度团支部选举记录表</a>
+        <a href="../PART1/part1-15.html" target="iframe1" id="part1-8" class="nav-part-a" hidden>团员发展</a>
+        <a href="../PART1/part1-19.html" target="iframe1" id="part1-9" class="nav-part-a" hidden>团员发展详情</a>
+        <a href="../PART1/part1-20.html" target="iframe1" id="part1-10" class="nav-part-a" hidden>团费收缴情况</a>
+        <a href="../PART1/part1-21.html" target="iframe1" id="part1-11" class="nav-part-a" hidden>团支部获奖情况记录</a>
+        <a href="../PART1/part1-22.html" target="iframe1" id="part1-12" class="nav-part-a" hidden>支部团员奖惩记录</a>
+        <a href="../PART1/part1-23.html" target="iframe1" id="part1-13" class="nav-part-a" hidden>主题团日活动</a>
+        <button class="nav-part" id="part2" onclick="part2()">PART2></button>
+        <a href="../PART2/part2-1.html" target="iframe1" id="part2-1" class="nav-part-a" hidden>三会两制一课</a>
+        <a href="../PART2/part2-2.html" target="iframe1" id="part2-2" class="nav-part-a" hidden>支部大会</a>
+        <a href="../PART2/part2-3.html" target="iframe1" id="part2-3" class="nav-part-a" hidden>支部大会-会议记录</a>
+        <a href="../PART2/part2-5.html" target="iframe1" id="part2-4" class="nav-part-a" hidden>支部委员会</a>
+        <a href="../PART2/part2-6.html" target="iframe1" id="part2-5" class="nav-part-a" hidden>支部委员会-会议记录</a>
+        <a href="../PART2/part2-7.html" target="iframe1" id="part2-6" class="nav-part-a" hidden>团小组会</a>
+        <a href="../PART2/part2-9.html" target="iframe1" id="part2-7" class="nav-part-a" hidden>团小组会-会议记录</a>
+        <a href="../PART2/part2-10.html" target="iframe1" id="part2-8" class="nav-part-a" style="height: 40px;"
+            hidden>团员教育评议评优或处理记录</a>
+        <a href="../PART2/part2-11.html" target="iframe1" id="part2-9" class="nav-part-a" hidden>团员年度团籍注册制度</a>
+        <a href="../PART2/part2-12.html" target="iframe1" id="part2-10" class="nav-part-a" style="height: 40px;"
+            hidden>本学年注册情况记录粘贴处</a>
+        <a href="../PART2/part2-13.html" target="iframe1" id="part2-11" class="nav-part-a" hidden>团课</a>
+        <a href="../PART2/part2-14.html" target="iframe1" id="part2-12" class="nav-part-a" hidden>团课记录</a>
+        <button class="nav-part" id="part3" onclick="part3()">PART3></button>
+        <a href="" target="iframe1" id="part3-1" class="nav-part-a" hidden>推优工作的程序</a>
+        <a href="" target="iframe1" id="part3-2" class="nav-part-a" hidden>本学年推优名单记录</a>
+        <a href="" target="iframe1" id="part3-3" class="nav-part-a" hidden>考察情况记录</a>
+        <button class="nav-part" id="part4" onclick="part4()">PART4></button>
+        <a href="" target="iframe1" id="part4-1" class="nav-part-a" hidden>“八个一”-团支部工作</a>
+        <a href="" target="iframe1" id="part4-2" class="nav-part-a" hidden>“八个一”-主题教育</a>
+        <a href="" target="iframe1" id="part4-3" class="nav-part-a" hidden>主题教育粘贴照片处</a>
+        <a href="" target="iframe1" id="part4-4" class="nav-part-a" hidden>“八个一”-主题教育附件</a>
+        <a href="" target="iframe1" id="part4-5" class="nav-part-a" style="height: 50px;" hidden>“八个一”-“三走”群众性体育活动</a>
+        <a href="" target="iframe1" id="part4-6" class="nav-part-a" hidden>科技创新成果立项</a>
+        <a href="" target="iframe1" id="part4-7" class="nav-part-a" hidden>建立维护新媒体平台</a>
+        <a href="" target="iframe1" id="part4-8" class="nav-part-a" hidden>集体性社会实践</a>
+        <a href="" target="iframe1" id="part4-9" class="nav-part-a" hidden>集体性志愿服务</a>
+        <a href="" target="iframe1" id="part4-10" class="nav-part-a" hidden>创新创业活动</a>
+        <a href="" target="iframe1" id="part4-11" class="nav-part-a" hidden>权益问题提案</a>
+        <a href="" target="iframe1" id="part4-12" class="nav-part-a" hidden>其他文化活动</a>
+        <a href="" target="iframe1" id="part4-13" class="nav-part-a" hidden>团支部所参加的院校活动</a>
+    </div>
+    <iframe name="iframe1" id="iframe1" class="iframe" src="../pages/pre-1.html"></iframe>
+</body>
+<script src="../scripts/jquery.js"></script>
+<script>
+    window.onload = function () {
+        $("#nav").hide();
+        $("#iframe1").hide();
+        $("#pre-1").hide();
+        $("#pre-2").hide();
+        $("#pre-3").hide();
+        $("#pre-4").hide();
+        $("#pre-5").hide();
+        $("#part1-1").hide();
+        $("#part1-2").hide();
+        $("#part1-3").hide();
+        $("#part1-4").hide();
+        $("#part1-5").hide();
+        $("#part1-6").hide();
+        $("#part1-7").hide();
+        $("#part1-8").hide();
+        $("#part1-9").hide();
+        $("#part1-10").hide();
+        $("#part1-11").hide();
+        $("#part1-12").hide();
+        $("#part1-13").hide();
+        $("#part2-1").hide();
+        $("#part2-2").hide();
+        $("#part2-3").hide();
+        $("#part2-4").hide();
+        $("#part2-5").hide();
+        $("#part2-6").hide();
+        $("#part2-7").hide();
+        $("#part2-8").hide();
+        $("#part2-9").hide();
+        $("#part2-10").hide();
+        $("#part2-11").hide();
+        $("#part2-12").hide();
+        $("#part3-1").hide();
+        $("#part3-2").hide();
+        $("#part3-3").hide();
+        $("#part4-1").hide();
+        $("#part4-2").hide();
+        $("#part4-3").hide();
+        $("#part4-4").hide();
+        $("#part4-5").hide();
+        $("#part4-6").hide();
+        $("#part4-7").hide();
+        $("#part4-8").hide();
+        $("#part4-9").hide();
+        $("#part4-10").hide();
+        $("#part4-11").hide();
+        $("#part4-12").hide();
+        $("#part4-13").hide();
+    }
+
+    function pre() {
+        $("#pre").toggleClass("nav-part-color");
+        $("#pre-1").toggle();
+        $("#pre-2").toggle();
+        $("#pre-3").toggle();
+        $("#pre-4").toggle();
+        $("#pre-5").toggle();
+    }
+
+    function part1() {
+        $("#part1").toggleClass("nav-part-color");
+        $("#part1-1").toggle();
+        $("#part1-2").toggle();
+        $("#part1-3").toggle();
+        $("#part1-4").toggle();
+        $("#part1-5").toggle();
+        $("#part1-6").toggle();
+        $("#part1-7").toggle();
+        $("#part1-8").toggle();
+        $("#part1-9").toggle();
+        $("#part1-10").toggle();
+        $("#part1-11").toggle();
+        $("#part1-12").toggle();
+        $("#part1-13").toggle();
+
+    }
+
+    function part2() {
+        $("#part2").toggleClass("nav-part-color");
+        $("#part2-1").toggle();
+        $("#part2-2").toggle();
+        $("#part2-3").toggle();
+        $("#part2-4").toggle();
+        $("#part2-5").toggle();
+        $("#part2-6").toggle();
+        $("#part2-7").toggle();
+        $("#part2-8").toggle();
+        $("#part2-9").toggle();
+        $("#part2-10").toggle();
+        $("#part2-11").toggle();
+        $("#part2-12").toggle();
+
+    }
+
+    function part3() {
+        $("#part3").toggleClass("nav-part-color");
+        $("#part3-1").toggle();
+        $("#part3-2").toggle();
+        $("#part3-3").toggle();
+    }
+
+    function part4() {
+        $("#part4").toggleClass("nav-part-color");
+        $("#part4-1").toggle();
+        $("#part4-2").toggle();
+        $("#part4-3").toggle();
+        $("#part4-4").toggle();
+        $("#part4-5").toggle();
+        $("#part4-6").toggle();
+        $("#part4-7").toggle();
+        $("#part4-8").toggle();
+        $("#part4-9").toggle();
+        $("#part4-10").toggle();
+        $("#part4-11").toggle();
+        $("#part4-12").toggle();
+        $("#part4-13").toggle();
+    }
+
+    function login() {
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '',
+        //     data: {
+        //这里应该放置密码和班级，送给后台比对
+        //     },
+        //     success: function (res) {
+        //        var leaClass = document.getElementById("classSelect").value;
+        //        var loginMsg = "登录的班级是" + leaClass;
+        //        console.log(loginMsg);
+        //        sessionStorage.setItem("class",leaClass);
+        //        console.log(leaClass);
+                $("#login").hide();
+                $("#nav").show();
+                $("#iframe1").show();
+        //     },
+        //     error:function(err){
+        //         alert("密码不正确，请您再次登录，或者向管理员询问密码！");
+        //     }
+        // })
+
+    }
+</script>
+
+<script>
+    var a = document.querySelectorAll('.nav a');
+    console.log(a.length);
+    for (i = 0; i < a.length; i++) {
+        a[i].onclick = function () {
+            for (j = 0; j < a.length; j++) {
+                a[j].className = "nav-part-a";
+            }
+            this.className += " focus";
+        }
+    }
+</script>
+
+</html>

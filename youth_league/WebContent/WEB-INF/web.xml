@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>youth_league</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+  	<servlet-name>part1_1</servlet-name>
+  	<servlet-class>mainServlet.part1_1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part1_1</servlet-name>
+  	<url-pattern>/工作日志/PART1/Servlet/part1_1</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>part1_2</servlet-name>
+  	<servlet-class>mainServlet.part1_2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part1_2</servlet-name>
+  	<url-pattern>/工作日志/PART1/Servlet/part1_2</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>part1_4</servlet-name>
+  	<servlet-class>mainServlet.part1_4</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part1_4</servlet-name>
+  	<url-pattern>/工作日志/PART1/Servlet/part1_4</url-pattern>
+  </servlet-mapping>
+  
+
+  <servlet>
+  	<servlet-name>test</servlet-name>
+  	<servlet-class>mainServlet.test</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>test</servlet-name>
+  	<url-pattern>/Servlet/test</url-pattern>
+  </servlet-mapping>
+  
+  
+ 
+ 
+ 
+
+</web-app>

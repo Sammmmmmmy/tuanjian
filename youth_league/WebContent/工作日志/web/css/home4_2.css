@@ -1,0 +1,83 @@
+.right form p{
+    /*border-left: 3px solid #6f6d41;*/
+    /*float: left;*/
+    /*font-size: 20px;*/
+    padding: 7px 0 7px 20px;
+    /*margin: 21px 8px 14px 21px;*/
+}
+.right form .form_content span{
+    border-left: 3px solid #6f6d41;
+    float: left;
+    font-size: 20px;
+    padding: 7px 10px 7px 20px;
+    margin: 21px 8px 14px 21px;
+}
+.title form{
+    width: 1000px;
+    margin: 0 auto;
+}
+.form_content span input[type=text]{
+    border: none;
+    font-size: 18px;
+    border-bottom: 2px solid #6f6d41;
+    width: 247px;
+    line-height: 30px;
+}
+.form_content p input[type=text]{
+    border: none;
+    font-size: 18px;
+    border-bottom: 2px solid #6f6d41;
+    width: 620px;
+    line-height: 30px;
+}
+form .all{
+    font-weight: bolder;
+    display: block;
+    width: 915px;
+    border: 3px solid #6f6d41;
+}
+form .all label{
+    display: block;
+    font-size: 18px;
+}
+form .all textarea{
+    border: 1px solid #6f6d41;
+    /*text-decoration: underline;*/
+    font-size: 18px;
+    margin: 5px 0;
+    align-items: center;
+    width: 905px;
+    height: 1000px;
+    resize: none;
+}
+.form_button{
+    margin: 40px 0;
+}
+.form_button input{
+    background-color: #6f6d41;
+    color: #fff;
+    font-size: 20px;
+    width: 220px;
+    height: 45px;
+    /*不显示轮廓线*/
+    outline: none;
+    border: none;
+    /*设置鼠标悬浮时，鼠标的样式*/
+    cursor: pointer;
+    /*设置四个角的弧度*/
+    border-radius: 30px;
+    margin-left: 210px;
+}
+.form_button #submit{
+    margin-left: 130px;
+    margin-right: 210px;
+}
+form span input[type=date]{
+    padding-left: 5px;
+    border: none;
+    font-size: 18px;
+    border-bottom: 2px solid #6f6d41;
+    width: 150px;
+    line-height: 30px;
+}
+input[type=date]::-webkit-inner-spin-button { visibility: hidden; }
