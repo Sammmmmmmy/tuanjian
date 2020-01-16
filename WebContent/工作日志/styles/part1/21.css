@@ -1,0 +1,49 @@
+.buttons {
+    margin: 0 auto;
+    width: 180px;
+}
+
+#change,
+#submit {
+    margin: 10px;
+    height: 25px;
+    width: 60px;
+    border-radius: 4px;
+    outline: none;
+}
+
+button {
+    display: inline-block;
+}
+
+.table-title {
+    border: 0;
+    margin: 10px auto;
+    width: 850px;
+    text-align: center;
+}
+
+
+.table-else {
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 20px;
+    width: 800px;
+    background-color: #cccccc;
+    text-align: center;
+    table-layout: fixed;
+    /*设置之后，table的文字填写不会让表格宽度变化*/
+}
+
+.table-else th {
+    height: 25px;
+    width: 150px;
+    background: #e9faff !important;
+}
+
+.table-else td {
+    width: 150px;
+    height: 25px;
+    background-color: white;
+    outline: none;
+}

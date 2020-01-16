@@ -1,0 +1,52 @@
+.page .tab_0 .img_1{
+    width: 84px;
+}
+.page .tab_0 .img_2{
+    width: 74px;
+    margin-left: 8px;
+}
+.page .tab_0{
+    display: block;
+    padding-right: 20px;
+    border-right: 3px solid #526a3a;
+    height: 100px;
+    width: 85px;
+    margin: 15px 15px 2px;
+}
+.tab_0 span{
+    color: #526a3a;
+    font-size: 20px;
+}
+.page form .form_content{
+    width: 1000px;
+}
+form .form_content input[type=text]{
+    width: 361px;
+}
+form{
+    display: inline-block;
+    margin-top: 15px;
+}
+.page form p{
+    margin-top: 4px;
+    margin-left: 11px;
+    border: none;
+    width: 1000px;
+}
+form .form_content .form_p textarea{
+    height: 100px;
+    width: 95%;
+    resize: none;
+    border: 1px solid #6f6d41;
+    font-size: 18px;
+    margin: 5px 0;
+    align-items: center;
+}
+.page form .form_content span{
+    border: none;
+    margin: 4px 8px 11px 11px;
+}
+form p input[type=checkbox]{
+    margin-top: 5px;
+    margin-left: 18px;
+}

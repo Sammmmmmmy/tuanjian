@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>12-本学年注册情况记录粘贴处</title>
+    <link type="text/css" href="../styles/part2/12.css" rel="stylesheet">
+    <link type="text/css" href="../styles/all.css" rel="stylesheet">
+</head>
+<body>
+    <div>
+            <div class="title">
+                    <div class="title-words">
+                            <p class="font-1">本学年注册情况记录粘贴处</p>
+                            <p class="font-2">LEAGUE MEMBERSHIP REGISTRATION</p>
+                    </div>
+            </div>
+    <div>
+        <div id="input">
+            <div class="uploadImgBtn" id="uploadImgBtn">
+                <input class="uploadImg" type="file" name="file" id="file">
+            </div>
+        </div>
+        <div class="buttons">
+                <button id="change">修改</button>
+                <button id="submit">提交</button>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="/scripts/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        //为外面的盒子绑定一个点击事件
+        // $("#uploadImgBtn").click(function () {
+            /*
+            1、先获取input标签
+            2、给input标签绑定change事件
+            3、把图片回显
+             */
+            //            1、先回去input标签
+            var $input = $("#file");
+            //            2、给input标签绑定change事件
+            var imgs = document.getElementById("input");
+            $input.on("change", function () {
+                //补充说明：因为我们给input标签设置multiple属性，因此一次可以上传多个文件
+                //获取选择图片的个数
+                var files = this.files;
+                var length = files.length;
+                console.log("选择了" + length + "张图片");
+                //3、回显
+                for (var i = 0; i < length; i++) {
+                    var fr = new FileReader(),
+                        div = document.createElement("div"),
+                        img = document.createElement("img");
+
+                    div.className = 'pic';
+
+                    fr.onload = function (e) {
+                        console.log("回显了图片")
+                        img.src = this.result;
+                        div.appendChild(img)
+                        imgs.appendChild(div);
+                    }
+                    fr.readAsDataURL(files[i]); //读取文件
+                }
+
+            })
+        })
+
+    // })
+</script>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>4-工作主题/工作时间/参与对象/效果目标</title>
+    <link type="text/css" href="../styles/part1/4.css" rel="stylesheet">
+</head>
+
+<body>
+    <!--上方的图，文字-->
+    <p>工作主题/工作时间/参与对象/效果目标</p>
+    <hr>
+    <!--表格-->
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>May</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="may"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Jun</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="jun"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Jul</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="jul"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Aug</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="aug"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Sep</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="sep"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Oct</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="oct"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Nov</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="nov"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Dec</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="dec"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Jan</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="jan"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Feb</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="feb"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Mar</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="mar"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="month">
+        <div class="input">
+            <table>
+                <th>Apr</th>
+                <td contentEditable="true">
+                    <div class="month-div" contenteditable="true" id="apr"></div>
+                </td>
+            </table>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button id="submit">提交</button>
+    </div>
+
+</body>
+<script src="../scripts/jquery.js"></script>
+<script>
+    var Class = sessionStorage.getItem("class");
+
+    // window.onload = function () {
+    //     showPlan();
+    // }
+
+    function showPlan() {
+        $.ajax({
+            type: "POST",
+            url: "servelt/part1_4",
+            data: {
+                "Class": Class,
+                "flag": 0
+            },
+            success: function (data, status) {
+                $("#may").innerText = data.may;
+                $("#jun").innerText = data.jun;
+                $("#jul").innerText = data.jul;
+                $("#aug").innerText = data.aug;
+                $("#sep").innerText = data.sep;
+                $("#oct").innerText = data.oct;
+                $("#nov").innerText = data.noc;
+                $("#dec").innerText = data.dec;
+                $("#jan").innerText = data.jan;
+                $("#feb").innerText = data.feb;
+                $("#mar").innerText = data.mar;
+                $("#apr").innerText = data.apr;
+
+            },
+            error: function (data, status) {
+                alert("出错啦");
+            }
+        });
+
+
+    }
+
+    function submitPlan() {
+        var Jan = document.getElementById("jan").innerText;
+        var Feb = document.getElementById("feb").innerText;
+        var Mar = document.getElementById("mar").innerText;
+        var Apr = document.getElementById("apr").innerText;
+        var May = document.getElementById("may").innerText;
+        var Jun = document.getElementById("jun").innerText;
+        var Jul = document.getElementById("jul").innerText;
+        var Aug = document.getElementById("aug").innerText;
+        var Sep = document.getElementById("sep").innerText;
+        var Oct = document.getElementById("oct").innerText;
+        var Nov = document.getElementById("nov").innerText;
+        var Dec = document.getElementById("dec").innerText;
+        $.ajax({
+            type: "POST",
+            url: "servlet/part1_4",
+            data: {
+                "Class": Class,
+                "flag": 1,
+                "may": May,
+                "jun": Jun,
+                "jul": jul,
+                "aug": Aug,
+                "sep": Sep,
+                "oct": Oct,
+                "nov": Nov,
+                "dec": Dec,
+                "jan": Jan,
+                "feb": Feb,
+                "mar": Mar
+            },
+            success: function (data, status) {
+                showPlan();
+            },
+            error: function (data, status) {
+                console.log("出错啦，找管理员把");
+            }
+        });
+    }
+
+
+    // $(window).bind('beforeunload', function () {
+    //     submitPlan();
+    // });
+
+</script>
+
+</html>

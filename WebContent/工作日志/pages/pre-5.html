@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>团支部资料</title>
+    <link type="text/css" href="../styles/pre/pre-5.css" rel="stylesheet">
+    <link type="text/css" href="../styles/all.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="pre-5">
+        <div class="pre-5-title">
+            <p class="pre-5-font-1">团支部资料</p>
+            <p class="pre-5-font-2">LEAGUE BRANCH INFORMATION</p>
+        </div>
+        <table class="pre-5-table">
+            <tr>
+                <td rowspan="5" class="pre-5-td-1"><img src="../images/pre-5-name.png"><br>支部情况<p class="pre-5-font-3">NAME</td>
+                <td>
+                    <tr>
+                        <td>支部名称</td>
+                        <td class="pre-5-content" contenteditable="true"></td>
+                        <td>学院</td>
+                        <td class="pre-5-content" contenteditable="true"></td>
+                    </tr>
+                    <tr>
+                        <td>团支部书记</td>
+                        <td class="pre-5-content" contenteditable="true"></td>
+                        <td>副书记</td>
+                        <td class="pre-5-content" contenteditable="true"></td>
+                    </tr>
+                    <tr>
+                        <td>团支部委员</td>
+                        <td colspan="3" class="pre-5-content" contenteditable="true"></td>
+                    </tr>
+                    <tr>
+                        <td>团员人数</td>
+                        <td class="pre-5-content" contenteditable="true"></td>
+                        <td>保留团籍的党员人数</td>
+                        <td class="pre-5-content" contenteditable="true"></td>
+                    </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="pre-5-td-1"><img src="../images/pre-5-securetary.png"><br>支部logo/口号<p class="pre-5-font-3">SECURETARY</p></td>
+                <td colspan="6" class="pre-5-content" style="height: 150px;" contenteditable="true"></td>
+            </tr>
+            <tr>
+                <td class="pre-5-td-1"><img src="../images/pre-5-chat-groups.png"><br>QQ群/微信群/其他<p class="pre-5-font-3">CHAT GROUPS</p></td>
+                <td colspan="6"  class="pre-5-content" style="height: 150px;" contenteditable="true"></td>
+            </tr>
+            <tr>
+                <td class="pre-5-td-1"><img src="../images/pre-5-address.png"><br>所在校区<p class="pre-5-font-3">ADDRESS</p></td>
+                <td colspan="6" class="pre-5-content" style="height: 150px;" contenteditable="true"></td>
+            </tr>
+            <tr>
+                <td class="pre-5-td-1"><img src="../images/pre-5-contact.png"><br>联系人&联系电话<p class="pre-5-font-3">CONTACT</p></td>
+                <td colspan="6" class="pre-5-content" style="height: 150px;" contenteditable="true"></td>
+            </tr>
+            <tr>
+                <td class="pre-5-td-1"><img src="../images/pre-5-e-mail.png"><br>其他联系方式<p class="pre-5-font-3">E-MAIL</p></td>
+                <td colspan="6"  class="pre-5-content" style="height: 150px;border: none;" contenteditable="true"></td>
+            </tr>
+        </table>
+        <div class="buttons">
+            <button id="submit" class="button-submit" onclick="submit()">提交</button>
+        </div>
+    </div>
+
+</body>
+<script src="../scripts/jquery.js"></script>
+<script>
+window.onload=function(){
+    showInfor();
+}
+
+function showInfor(){
+    $.ajax({
+        type:"POST",
+        url:"",
+        data:{
+
+        }
+    });
+}
+
+function submitInfor(){
+
+}
+</script>
+</html>
