@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>19-团员发展</title>
+    <link type="text/css" href="../styles/part1/19.css" rel="stylesheet">
+    <link type="text/css" href="../styles/all.css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <div class="title">
+            <div class="title-words">
+                <p class="font-1">团员发展</p>
+                <p class="font-2">LEAGUE MEMBERS DEVELOPMENT</p>
+            </div>
+        </div>
+        <div id="outside-div">
+            <div>
+                <!-- 个人情况/ -->
+                <div style="margin: 20px auto;">
+                    <p style="margin: 0 auto;width: 120px;"><img src="../images/个人.png">个人情况</p>
+                    <div class="input" contenteditable placeholder="请输入文字"></div>
+                </div>
+                <!-- 谈话记录/ -->
+                <div style="margin: 20px auto;">
+                    <p style="margin: 0 auto;width: 120px;"> <img src="../images/记录.png">谈话记录</p>
+                    <div class="input" contenteditable placeholder="请输入文字"></div>
+                </div>
+                <!--情况考察/ -->
+                <div style="margin: 20px auto;">
+                    <p style="margin: 0 auto;width: 120px;"><img src="../images/考察.png">情况考察</p>
+                    <div class="input" contenteditable placeholder="请输入文字"></div>
+                </div>
+
+                <hr style="width: 620px;">
+            </div>
+        </div>
+
+        <!-- 这是添加表格的按钮 -->
+        <div style="margin: 0 auto;width: 80px;height: 80px;">
+            <img src="../images/add.png" style="width: 80px;height: 80px;" onclick="add()">
+        </div>
+
+        <div class="buttons">
+            <button id="submit">提交</button>
+        </div>
+    </div>
+</body>
+
+<script src="../scripts/jquery.js"></script>
+<script>
+    var Class = sessionStorage.getItem("Class");
+    var outsideDiv = document.getElementById("outside-div");
+    var count = 1;
+
+    window.onload = function () {
+        outsideDiv.innerHTML = "";
+        $.ajax({
+            type: "POST",
+            url: "servlet/part1_19",
+            data: {
+                "flag": 0,
+                "Class": Class
+            },
+            success: function (data, status) {
+                for (var i = 0; i < data.size; i++) {
+                    var Box = document.createElement('div');
+                    Box.id = count + "-box";
+
+                    var conditionBox = document.createElement('div');
+                    conditionBox.style.margin = "0 auto";
+                    var p1 = document.createElement('p');
+                    p1.style.margin = "0 auto";
+                    p1.style.width = "120px";
+                    var img1 = document.createElement('img');
+                    img1.src = "../images/个人.png";
+                    p1.append(img1);
+                    img1.after("个人情况");
+                    var condition = document.createElement('div');
+                    condition.className = "input";
+                    condition.contentEditable = true;
+                    condition.id = count + "-condition";
+                    condition.innerText = data.array[i].DPerCondition;
+                    conditionBox.append(p1);
+                    conditionBox.append(condition);
+
+                    var recordBox = document.createElement('div');
+                    recordBox.style.margin = "0 auto";
+                    var p2 = document.createElement('p');
+                    p2.style.margin = "0 auto";
+                    p2.style.width = "120px";
+                    var img2 = document.createElement('img');
+                    img2.src = "../images/记录.png";
+                    p2.append(img2);
+                    img2.after("谈话记录");
+                    var record = document.createElement('div');
+                    record.className = "input";
+                    record.contentEditable = true;
+                    record.id = count + "-record";
+                    record.innerText = data.array[i].DMemcon;
+                    recordBox.append(p2);
+                    recordBox.append(record);
+
+                    var investigateBox = document.createElement('div');
+                    investigateBox.style.margin = "0 auto";
+                    var p3 = document.createElement('p');
+                    p3.style.margin = "0 auto";
+                    p3.style.width = "120px";
+                    var img3 = document.createElement('img');
+                    img3.src = "../images/考察.png";
+                    p3.append(img3);
+                    img3.after("情况考察");
+                    var investigate = document.createElement('div');
+                    investigate.className = "input";
+                    investigate.contentEditable = true;
+                    investigate.id = count + "-investigate";
+                    investigate.innerText = data.array[i].DInvestigation;
+                    investigateBox.append(p3);
+                    investigateBox.append(investigate);
+
+                    var hr1 = document.createElement('hr');
+                    hr1.style.width = "620px";
+
+                    Box.append(conditionBox);
+                    Box.append(recordBox);
+                    Box.append(investigateBox);
+                    Box.append(hr1);
+
+                    outsideDiv.append(Box);
+
+                    count++;
+                }
+            },
+            error: function (data, status) {
+                alert("出错啦，找管理员处理把");
+            }
+        });
+    }
+
+    function submit() {
+        var DArray = [];
+        for (var i = 1; i < count; i++) {
+            if (document.getElementById(i + "-condition").innerText == "" && document.getElementById(i + "-record").innerText == "" && document.getElementById(i + "-investigate").innerText == "") { }
+            else {
+                DArray.push({
+                    "DPerCondition": document.getElementById(i + "-condition").innerText,
+                    "DMemcon": document.getElementById(i + "-record").innerText,
+                    "DInvestigation": document.getElementById(i + "-investigate").innerText
+                });
+            }
+        }
+        var finalArray = JSON.stringify(DArray);
+
+        $.ajax({
+            type: "POST",
+            url: "servlet/part1_19",
+            data: {
+                "flag": 1,
+                "Class": Class,
+                "array": finalArray
+            },
+            success: function (data, status) {
+                console.log("success!");
+            },
+            error: function (data, status) {
+                alert("出事儿啦，快找管理员来处理把~");
+            }
+        });
+    }
+
+    function add() {
+        var Box = document.createElement('div');
+        Box.id = count + "-box";
+
+        var conditionBox = document.createElement('div');
+        conditionBox.style.margin = "0 auto";
+        var p1 = document.createElement('p');
+        p1.style.margin = "0 auto";
+        p1.style.width = "120px";
+        var img1 = document.createElement('img');
+        img1.src = "../images/个人.png";
+        p1.append(img1);
+        img1.after("个人情况");
+        var condition = document.createElement('div');
+        condition.className = "input";
+        condition.contentEditable = true;
+        condition.setAttribute("placeholder", "请输入文字");
+        condition.id = count + "-condition";
+        conditionBox.append(p1);
+        conditionBox.append(condition);
+
+        var recordBox = document.createElement('div');
+        recordBox.style.margin = "0 auto";
+        var p2 = document.createElement('p');
+        p2.style.margin = "0 auto";
+        p2.style.width = "120px";
+        var img2 = document.createElement('img');
+        img2.src = "../images/记录.png";
+        p2.append(img2);
+        img2.after("谈话记录");
+        var record = document.createElement('div');
+        record.className = "input";
+        record.contentEditable = true;
+        record.setAttribute("placeholder", "请输入文字");
+        record.id = count + "-record";
+        recordBox.append(p2);
+        recordBox.append(record);
+
+        var investigateBox = document.createElement('div');
+        investigateBox.style.margin = "0 auto";
+        var p3 = document.createElement('p');
+        p3.style.margin = "0 auto";
+        p3.style.width = "120px";
+        var img3 = document.createElement('img');
+        img3.src = "../images/考察.png";
+        p3.append(img3);
+        img3.after("情况考察");
+        var investigate = document.createElement('div');
+        investigate.className = "input";
+        investigate.contentEditable = true;
+        investigate.setAttribute("placeholder", "请输入文字");
+        investigate.id = count + "-investigate";
+        investigateBox.append(p3);
+        investigateBox.append(investigate);
+
+        var hr1 = document.createElement('hr');
+        hr1.style.width = "620px";
+
+        Box.append(conditionBox);
+        Box.append(recordBox);
+        Box.append(investigateBox);
+        Box.append(hr1);
+
+
+        outsideDiv.append(Box);
+        count++;
+    }
+
+    // $(window).bind('beforeunload', function () {
+    //     submit();
+    // });
+
+
+</script>
+
+</html>

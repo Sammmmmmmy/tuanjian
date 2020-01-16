@@ -1,0 +1,37 @@
+.table .table_tab{
+    border-collapse:collapse;
+    margin: 34px 30px 0 30px;
+    /*190 * 5*/
+    /*20*60*/
+    height: 100%;
+    width: 950px;
+    border: 1px solid #c3c0a7;
+    table-layout: fixed;
+}
+.body{
+    width: 1200px;
+    margin: 0 auto;
+}
+.body .right{
+    width: 1000px;
+    margin: 0 auto;
+}
+.body .right .table .fir{
+    text-align: center;
+}
+.table_tab td,.table_tab th{
+    font-size: 18px;
+    border: 1px solid #ada890;
+    height: 60px;
+    width: 190px;
+    overflow: hidden;
+    padding: 1px;
+}
+.table_tab th{
+    font-size: 22px;
+    background-color: #b3a082;
+    color: #876f51;
+}
+.right p{
+    width: 800px;
+}

@@ -1,0 +1,63 @@
+body
+{
+    font-family: 宋体;
+}
+
+.pre-5-title
+{
+    width:800px;
+    margin: 0 auto;
+    border:none;
+    border-top: solid 6px rgb(139, 167, 120);
+    border-bottom:solid 3px rgb(139, 167, 120);
+    margin-bottom:20px;
+}
+
+.pre-5-font-1
+{
+    font-size: 40px;
+    font-family: 'SimSun', serif;
+    margin: 0;
+}
+
+.pre-5-font-2
+{
+    font-size: 22px;
+    font-family: '思源黑体 CN Bold', fantasy;
+    margin: 0;
+    margin-left: 4px;
+}
+
+.pre-5-font-3
+{
+    font-size: 14px;
+    margin:  0;
+}
+
+.pre-5-table
+{
+    width: 800px;
+    margin:0 auto;
+    border: none;
+    border-left:solid 4px grey ;
+}
+
+.pre-5-table td
+{
+    width: 128px;
+    height: 25px;
+}
+
+.pre-5-td-1
+{
+    text-align: center;
+    width: 160px;
+    height: 150px;
+}
+
+.pre-5-content
+{
+    border-bottom:solid 1.5px grey;
+    height: 150px;
+    outline: none;
+}

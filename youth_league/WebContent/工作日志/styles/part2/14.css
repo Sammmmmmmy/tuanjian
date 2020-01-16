@@ -1,0 +1,42 @@
+body{
+    font-size:16px ;
+    font-family: 微软雅黑;
+}
+
+table{
+    border: 2px dashed darkgray;
+    margin: auto;
+    padding: 10px;
+}
+
+
+table td{
+    width:100px;
+    height: 25px;
+    overflow: auto;
+    outline: none;
+    border-bottom:solid 1px lightgray;
+}
+
+
+.td-3{
+    width: 150px;
+}
+
+.buttons {
+    margin: 0 auto;
+    width: 180px;
+}
+
+#change,
+#submit {
+    margin: 10px;
+    height: 25px;
+    width: 60px;
+    border-radius: 4px;
+    outline: none;
+}
+
+button {
+    display: inline-block;
+}
