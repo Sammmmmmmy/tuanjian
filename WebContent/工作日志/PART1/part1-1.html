@@ -64,10 +64,10 @@
             },
             success: function (data, status) {
                 console.log("团支部建设，查询数据");
-                $("#basic").innerText() = data.basic;
-                $("#specialty").innerText() = data.special;
-                $("#innovation").innerText() = data.innovation;
-                $("#goal").innerText() = data.goal;
+                $("#basic").text = data.basic;
+                $("#specialty").text = data.special;
+                $("#innovation").text = data.innovation;
+                $("#goal").text = data.goal;
             },
             error: function (data, status) {
                 alert("查询数据失败，请联系管理员~");

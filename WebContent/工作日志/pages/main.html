@@ -233,11 +233,11 @@
         //这里应该放置密码和班级，送给后台比对
         //     },
         //     success: function (res) {
-        //        var leaClass = document.getElementById("classSelect").value;
-        //        var loginMsg = "登录的班级是" + leaClass;
-        //        console.log(loginMsg);
-        //        sessionStorage.setItem("class",leaClass);
-        //        console.log(leaClass);
+                var leaClass = document.getElementById("classSelect").value;
+                var loginMsg = "登录的班级是" + leaClass;
+                console.log(loginMsg);
+                sessionStorage.setItem("class",leaClass);
+                console.log(leaClass);
                 $("#login").hide();
                 $("#nav").show();
                 $("#iframe1").show();

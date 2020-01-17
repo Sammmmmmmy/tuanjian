@@ -24,7 +24,7 @@ public class part1_1 extends HttpServlet {
 		database.connect();
 		String flag_string = request.getParameter("flag");
 		int flag = Integer.parseInt(flag_string);
-		System.out.println(flag);
+		System.out.println("flag:"+flag);
 		if(flag == 0) {
 			try {
 				show(request,response);
@@ -87,11 +87,11 @@ public class part1_1 extends HttpServlet {
 		String specialty = request.getParameter("specialty");
 		String innovation = request.getParameter("innovation");
 		String goal = request.getParameter("goal");
-		System.out.println(Class);
-		System.out.println(basic);
-		System.out.print(specialty);
-		System.out.println(innovation);
-		System.out.println(goal);
+		System.out.println("Class:"+Class);
+		System.out.println("basic:"+basic);
+		System.out.println("specialty:"+specialty);
+		System.out.println("innovation:"+innovation);
+		System.out.println("goal:"+goal);
 		String sql = "update 团支部建设 set basic = ?, specialty = ?, innovation = ?, goal = ?  where Class= ?";
 		
 		//准备sql语句并执行
