@@ -48,9 +48,8 @@ public class part1_1 extends HttpServlet {
 	//向前端发送数据库中的数据
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String json_string = request.getParameter("json");
-		JSONObject json = JSONObject.fromObject(json_string);
 		
-		String Class =  json.getString("Class");
+		String Class =  request.getParameter("Class");
 		String sql = "select * from 团支部建设 where 班级 = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);

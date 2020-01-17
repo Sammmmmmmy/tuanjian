@@ -57,7 +57,7 @@
     window.onload = function () {
         $.ajax({
             type: 'POST',
-            url: 'servlet/part1_1',
+            url: 'Servlet/part1_1',
             data: {
                 "flag": 0, //查询数据
                 "Class": Class
@@ -80,16 +80,14 @@
     function submit() {
         $.ajax({
             type: 'POST',
-            url: 'servlet/part1_1',
+            url: 'Servlet/part1_1',
             data: {
                 "flag": 1, //发送数据
-                "json": {
-                    "class": Class,
-                    "basic": $("#basic").text(),
-                    "specialty": $("#specialty").text(),
-                    "innovation": $("#innovation").text(),
-                    "goal": $("#goal").text()
-                }
+                "class": Class,
+                "basic": $("#basic").text(),
+                "specialty": $("#specialty").text(),
+                "innovation": $("#innovation").text(),
+                "goal": $("#goal").text()
             },
             success: function (data, status) {
                 console.log("上传数据成功");
