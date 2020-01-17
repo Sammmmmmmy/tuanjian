@@ -16,15 +16,17 @@ import Model.LeaMember;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-
+//注册团员名单
 public class part1_2 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		database.connect();
+		
 		String flag_string = request.getParameter("flag");
 		int flag = Integer.parseInt(flag_string);
+		
 		if(flag == 0)
 			try {
 				show(request,response);
@@ -39,19 +41,24 @@ public class part1_2 extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		
 		database.disconnect();
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		String json_string = request.getParameter("JSON");
-		JSONObject json = JSONObject.fromObject(json_string);
-		String Class = json.getString("Class");
-		String sql = "select * from 注册团员名单 where 班级 = ?";
+		
+		String Class = request.getParameter("Class");
+		
+		
+		String sql = "select * from 注册团员名单 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
 		
+		
 		JSONArray array = new JSONArray();
-		JSONObject memjson = new JSONObject();
+		JSONObject memjson;
+		
+		
 		int size = 0;
 		String memName;
 		String sex;
@@ -84,13 +91,16 @@ public class part1_2 extends HttpServlet {
 			array.add(memjson);
 			size++;
 		}
-		JSONObject write = new JSONObject();
-		write.put("size",size);
-		write.put("array", array);
+		
+		JSONObject output = new JSONObject();
+		output.put("size",size);
+		output.put("array", array);
+		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out= response.getWriter();
-		out.write(write.toString());
+		out.write(output.toString());
+		
 		pst.close();
 		set.close();
 		
@@ -99,12 +109,10 @@ public class part1_2 extends HttpServlet {
 	public void update(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException  {
 		
 
+		String Class = request.getParameter("Class");
+		JSONArray array = JSONArray.fromObject(request.getParameter("Array"));
 		
-		String json_string = request.getParameter("JSON");
-		JSONObject json = JSONObject.fromObject(json_string);
-		JSONArray array = json.getJSONArray("Array");
-		String Class = json.getString("Class");
-		
+		//首先删除数据库中该班级所有的团员信息
 		String sql = "delete * from 注册团员名单 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
@@ -114,8 +122,9 @@ public class part1_2 extends HttpServlet {
 		int size = array.size();
 		int count = 0;
 		System.out.println(size);
-		
+		//从jsonarray中获取的memjson
 		JSONObject memjson;
+		
 		String memName;
 		String sex;
 		String nation;
@@ -124,6 +133,8 @@ public class part1_2 extends HttpServlet {
 		String politicStatus;
 		String joinPartyDate;
 		String joinLeaDate;
+		
+		//m中包含团员的信息
 		LeaMember m;
 		
 		while(count!=size) {

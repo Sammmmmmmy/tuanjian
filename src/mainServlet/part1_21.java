@@ -17,6 +17,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
+//团支部获奖情况
 public class part1_21 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);

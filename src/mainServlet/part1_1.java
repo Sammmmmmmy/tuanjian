@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import DB.database;
 import net.sf.json.JSONObject;
 
+//团支部建设
 public class part1_1 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
@@ -92,7 +93,7 @@ public class part1_1 extends HttpServlet {
 	}
 	//更新数据库中的班级信息
 	public void write(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		//获取前端发送来的json
+		
 		
 		//从json中获取Class，用于修改对应班级的信息
 		String Class = request.getParameter("Class");

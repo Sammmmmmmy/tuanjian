@@ -14,26 +14,27 @@ import DB.database;
 
 public class login extends HttpServlet {
       
-    public login() {
-        super();  
-    }
 
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		doPost(request,response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		database.connect();
+		
+		//向前端发送int类型的pass,pass==1时代表密码正确
 		int pass = 1;
+		
+		
 		String Class = request.getParameter("Class");
 		String pwd = request.getParameter("pwd");
-		database.connect();
+		
+		
 		String sql = "select * from login where Class = ? and pwd = ?";
 		PreparedStatement pst = database.getpst(sql);
 		try {
-			pst.setString(0, Class);
-			pst.setString(1, pwd);
+			pst.setString(1, Class);
+			pst.setString(2, pwd);
 			ResultSet set = pst.executeQuery();
 			if(set.next())
 				pass = 0;
@@ -45,10 +46,8 @@ public class login extends HttpServlet {
 			pst.close();
 		    set.close();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 		
 		

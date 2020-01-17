@@ -15,7 +15,7 @@ import DB.database;
 import net.sf.json.JSONObject;
 
 
-
+//¡Ì…Ë
 
 
 public class part1_6 extends HttpServlet {
