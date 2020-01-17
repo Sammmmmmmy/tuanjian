@@ -22,9 +22,13 @@ public class part1_1 extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("连接Servlet成功");
 		database.connect();
+		
+		
 		String flag_string = request.getParameter("flag");
 		int flag = Integer.parseInt(flag_string);
 		System.out.println("flag:"+flag);
+		
+		
 		if(flag == 0) {
 			try {
 				show(request,response);
@@ -47,19 +51,29 @@ public class part1_1 extends HttpServlet {
 	}
 	//向前端发送数据库中的数据
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		String json_string = request.getParameter("json");
 		
 		String Class =  request.getParameter("Class");
-		String sql = "select * from 团支部建设 where 班级 = ?";
+		System.out.println("Class:"+Class);
+		
+		
+		String sql = "select * from 团支部建设 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);
 		ResultSet set = pst.executeQuery();
-		set.next();
 		
-		String basic = set.getString("基本概况");
-		String specialty = set.getString("支部特色");
-		String innovation = set.getString("工作创新");
-		String goal = set.getString("目标理想");
+		
+		set.next();
+		String basic = set.getString("basic");
+		String specialty = set.getString("specialty");
+		String innovation = set.getString("innovation");
+		String goal = set.getString("goal");
+		System.out.println("b:"+basic);
+		System.out.println("s:"+specialty);
+		System.out.println("i:"+innovation);
+		System.out.println("g:"+goal);
+		
+		
+		
 		
 		//准备向前端发送的json数据
 		JSONObject jsonObject = new JSONObject();	
@@ -67,14 +81,13 @@ public class part1_1 extends HttpServlet {
 	    jsonObject.put("specialty", specialty);
 	    jsonObject.put("innovation", innovation);
 	    jsonObject.put("goal",goal);
-	    
-		response.setCharacterEncoding("UTF-8");
+	    response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out= response.getWriter();
-	    out.write(jsonObject.toString());
+		out.write(jsonObject.toString());
 	    
 		pst.close();
-	    set.close();
+		set.close();
 
 	}
 	//更新数据库中的班级信息

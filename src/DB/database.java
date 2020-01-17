@@ -8,7 +8,7 @@ public class database {
 	public static void connect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/youth_league_branch?useSSL=false&serverTimezone=UTC","root","123456");
+			connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/youth_league_branch?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true","root","123456");
 			statement = connection.createStatement();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -20,7 +20,6 @@ public class database {
 		try {
 			resultset = statement.executeQuery(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return resultset;
