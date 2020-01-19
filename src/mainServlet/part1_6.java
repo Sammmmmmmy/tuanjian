@@ -25,13 +25,11 @@ public class part1_6 extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("连接Servlet成功");
-		database.connect();
-		//获取前端传来的flag值
-		//flag == 0表示查询数据
-		//flag == 1表示修改数据
-		String flag_string = request.getParameter("flag");
-		int flag = Integer.parseInt(flag_string);
 		
+		database.connect();
+		
+	
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		
 		if(flag == 0) {
 			try {
@@ -41,8 +39,6 @@ public class part1_6 extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-		
 		if(flag == 1) {
 			try {
 				write(request,response);
@@ -51,18 +47,17 @@ public class part1_6 extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
 	    database.disconnect();
 	}
 	
 	
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		//获取前端发送的json
-		String json_string = request.getParameter("json");
-		JSONObject json = JSONObject.fromObject(json_string);
-		
+
 		//获取json中的班级，用于查询该班级的所有信息
-		String Class =  json.getString("Class");
-		String sql = "select * from 另设 where 班级 = ?";
+		String Class = request.getParameter("Class");
+		
+		String sql = "select * from 另设 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);
 		ResultSet set = pst.executeQuery();

@@ -19,7 +19,7 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>part1_1</servlet-name>
-  	<url-pattern>/工作日志/PART1/Servlet/part1_1</url-pattern>
+  	<url-pattern>/工作日志/PART1/servlet/part1_1</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -28,7 +28,7 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>part1_2</servlet-name>
-  	<url-pattern>/工作日志/PART1/Servlet/part1_2</url-pattern>
+  	<url-pattern>/工作日志/PART1/servlet/part1_2</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -37,7 +37,7 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>part1_4</servlet-name>
-  	<url-pattern>/工作日志/PART1/Servlet/part1_4</url-pattern>
+  	<url-pattern>/工作日志/PART1/servlet/part1_4</url-pattern>
   </servlet-mapping>
   
 
@@ -47,12 +47,10 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>login</servlet-name>
-  	<url-pattern>/工作日志/pages/Servlet/login</url-pattern>
+  	<url-pattern>/工作日志/pages/servlet/login</url-pattern>
   </servlet-mapping>
   
 
- 
- 
  
 
 </web-app>

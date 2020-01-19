@@ -18,6 +18,8 @@ import net.sf.json.JSONObject;
 
 //团支部风采
 public class part1_7 extends HttpServlet {
+	
+	private String url = "E:\\团建web图片";
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
@@ -42,24 +44,23 @@ public class part1_7 extends HttpServlet {
 		database.disconnect();
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		String json_string = request.getParameter("JSON");
-		JSONObject json = JSONObject.fromObject(json_string);
-		String Class = json.getString("Class");
 		
-		String sql = "select * from 团支部风采 where 班级 = ?";
+		String Class = request.getParameter("Class");
+		
+		String sql = "select * from 团支部风采 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
 		
+		//image数组
 		JSONArray array = new JSONArray();
 		JSONObject imagejson;
 		int size = 0; 
-		String image;
-		int key;
+		String imageurl;
+		String imagebase64;
 		while(set.next()) {
-			
 			imagejson = new JSONObject();
-			image = set.getString("image");
+			imageurl = set.getString("image");
 			key = set.getInt("key");
 			
 			imagejson.put("image",image);

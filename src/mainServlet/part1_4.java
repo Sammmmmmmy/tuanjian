@@ -25,13 +25,10 @@ public class part1_4 extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("连接Servlet成功");
-		database.connect();
-		//获取前端传来的flag值
-		//flag == 0表示查询数据
-		//flag == 1表示修改数据
-		String flag_string = request.getParameter("flag");
-		int flag = Integer.parseInt(flag_string);
 		
+		database.connect();
+		
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		
 		if(flag == 0) {
 			try {
@@ -41,7 +38,6 @@ public class part1_4 extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
 		
 		if(flag == 1) {
 			try {
@@ -56,13 +52,12 @@ public class part1_4 extends HttpServlet {
 	
 	
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		//获取前端发送的json
-		String json_string = request.getParameter("json");
-		JSONObject json = JSONObject.fromObject(json_string);
+	
+		
 		
 		//获取json中的班级，用于查询该班级的所有信息
-		String Class =  json.getString("Class");
-		String sql = "select * from 团支部建设 where 班级 = ?";
+		String Class =  request.getParameter("Class");
+		String sql = "select * from 工作主题工作时间参与对象效果目标 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);
 		ResultSet set = pst.executeQuery();
@@ -106,22 +101,20 @@ public class part1_4 extends HttpServlet {
 
 	}
 	public void write(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		//获取前端发送的json
-		String json_string = request.getParameter("json");
-		JSONObject json = JSONObject.fromObject(json_string);
-		String Class = json.getString("Class");
-		String may = json.getString("may");
-		String jun = json.getString("jun");
-		String jul = json.getString("jul");
-		String aug = json.getString("aug");
-		String sep =  json.getString("sep");
-		String oct = json.getString("oct");
-		String nov = json.getString("nov");
-		String dec = json.getString("dec");
-		String jan =  json.getString("jan");
-		String feb = json.getString("feb");
-		String mar = json.getString("mar");
-		String Apr = json.getString("Apr");
+		
+		String Class = request.getParameter("Class");
+		String may = request.getParameter("may");
+		String jun = request.getParameter("jun");
+		String jul = request.getParameter("jul");
+		String aug = request.getParameter("aug");
+		String sep = request.getParameter("sep");
+		String oct = request.getParameter("oct");
+		String nov = request.getParameter("nov");
+		String dec = request.getParameter("dec");
+		String jan = request.getParameter("jan");
+		String feb = request.getParameter("feb");
+		String mar = request.getParameter("mar");
+		String Apr = request.getParameter("Apr");
 		String sql = "update 团支部建设 set may = ?, jun = ?, jul = ?, aug = ?, sep = ?, oct = ?, nov = ?, dec = ?, jan = ?, feb = ?, mar = ?, Apr = ?  where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,may);
