@@ -24,12 +24,7 @@ public class part1_1 extends HttpServlet {
 		System.out.println("连接Servlet成功");
 		database.connect();
 		
-		
-		String flag_string = request.getParameter("flag");
-		int flag = Integer.parseInt(flag_string);
-		System.out.println("flag:"+flag);
-		
-		
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		if(flag == 0) {
 			try {
 				show(request,response);
@@ -38,7 +33,6 @@ public class part1_1 extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
 		if(flag == 1) {
 			try {
 				write(request,response);

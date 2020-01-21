@@ -25,12 +25,11 @@ public class database {
 		return resultset;
 	}
 	
-	public static void executeUpdate_sta(String sql)  {
+	public static void executeUpdate(String sql)  {
 		try {
 			statement.executeUpdate(sql);
 			statement.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

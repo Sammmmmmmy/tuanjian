@@ -40,6 +40,24 @@
   	<url-pattern>/工作日志/PART1/servlet/part1_4</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+  	<servlet-name>part1_6</servlet-name>
+  	<servlet-class>mainServlet.part1_6</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part1_6</servlet-name>
+  	<url-pattern>/工作日志/PART1/servlet/part1_6</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>part1_7</servlet-name>
+  	<servlet-class>mainServlet.part1_7</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part1_7</servlet-name>
+  	<url-pattern>/工作日志/PART1/servlet/part1_7</url-pattern>
+  </servlet-mapping>
+  
 
   <servlet>
   	<servlet-name>login</servlet-name>

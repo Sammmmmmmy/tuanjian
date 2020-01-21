@@ -23,8 +23,8 @@ public class part1_14 extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		database.connect();
-		String flag_string = request.getParameter("flag");
-		int flag = Integer.parseInt(flag_string);
+		
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		if(flag == 0)
 			try {
 				show(request,response);;
@@ -39,14 +39,12 @@ public class part1_14 extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		database.disconnect();
+
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		String json_string = request.getParameter("JSON");
-		JSONObject json = JSONObject.fromObject(json_string);
-		String Class = json.getString("Class");
-		
-		String sql = "select * from 团支部风采 where 班级 = ?";
+		String Class = request.getParameter("Class");
+		//准备sql语句
+		String sql = "select * from 年度团支部选举记录 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
