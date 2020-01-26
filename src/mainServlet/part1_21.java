@@ -24,8 +24,7 @@ public class part1_21 extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		database.connect();
-		String flag_string = request.getParameter("flag");
-		int flag = Integer.parseInt(flag_string);
+		int flag = Integer.parseInt(request.getParameter("Class"));
 		if(flag == 0)
 			try {
 				show(request,response);;

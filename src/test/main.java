@@ -1,6 +1,8 @@
 package test;
 
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -53,4 +55,17 @@ public class main {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH:mm:ss");//设置日期格式
 		System.out.println(df.format(new Date()));//获取当前时间
 	}
+	//String和int转换
+	public static void IntAndString() throws SQLException {
+		database.connect();
+		String sql = "select * form test where Class = 2";
+		ResultSet set = database.executeQuery(sql);
+		
+		String test = "";
+		if(set.next()) {
+			test = set.getInt(0)+"";
+		}
+		database.disconnect();
+	}
+	
 }

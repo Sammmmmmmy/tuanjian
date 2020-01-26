@@ -25,11 +25,8 @@ public class part1_4 extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("连接Servlet成功");
-		
 		database.connect();
-		
 		int flag = Integer.parseInt(request.getParameter("flag"));
-		
 		if(flag == 0) {
 			try {
 				show(request,response);
@@ -38,10 +35,9 @@ public class part1_4 extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
 		if(flag == 1) {
 			try {
-				write(request,response);
+				update(request,response);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -53,29 +49,42 @@ public class part1_4 extends HttpServlet {
 	
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 	
-		
-		
 		//获取json中的班级，用于查询该班级的所有信息
 		String Class =  request.getParameter("Class");
 		String sql = "select * from 工作主题工作时间参与对象效果目标 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);
 		ResultSet set = pst.executeQuery();
-		set.next();
 		
-		String may = set.getString("may");
-		String jun = set.getString("jun");
-		String jul = set.getString("jul");
-		String aug = set.getString("aug");
-		String sep = set.getString("sep");
-		String oct = set.getString("oct");
-		String nov = set.getString("nov");
-		String dec = set.getString("dec");
-		String jan = set.getString("jan");
-		String feb = set.getString("feb");
-		String mar = set.getString("mar");
-		String Apr = set.getString("Apr");
-		
+		//准备数据库中的信息
+		String may = "";
+		String jun = "";
+		String jul = "";
+		String aug = "";
+		String sep = "";
+		String oct = "";
+		String nov = "";
+		String dec = "";
+		String jan = "";
+		String feb = "";
+		String mar = "";
+		String Apr = "";
+		if(set.next()) {
+			may = set.getString("may");
+			jun = set.getString("jun");
+			jul = set.getString("jul");
+			aug = set.getString("aug");
+			sep = set.getString("sep");
+			oct = set.getString("oct");
+			nov = set.getString("nov");
+			dec = set.getString("dec");
+			jan = set.getString("jan");
+			feb = set.getString("feb");
+			mar = set.getString("mar");
+			Apr = set.getString("Apr");
+		}
+		else
+			insert(Class);
 		//向前端发送封装好的json对象
 		JSONObject jsonObject = new JSONObject();	
 		jsonObject.put("may", may);
@@ -93,15 +102,14 @@ public class part1_4 extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out= response.getWriter();
-	    out.write(jsonObject.toString());	
-	    
-	    
+	    out.write(jsonObject.toString());
+	    //关闭数据库对象
 		pst.close();
 	    set.close();
 
 	}
-	public void write(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		
+	public void update(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		//根据前端发送来的信息更新数据库内容
 		String Class = request.getParameter("Class");
 		String may = request.getParameter("may");
 		String jun = request.getParameter("jun");
@@ -115,7 +123,8 @@ public class part1_4 extends HttpServlet {
 		String feb = request.getParameter("feb");
 		String mar = request.getParameter("mar");
 		String Apr = request.getParameter("Apr");
-		String sql = "update 团支部建设 set may = ?, jun = ?, jul = ?, aug = ?, sep = ?, oct = ?, nov = ?, dec = ?, jan = ?, feb = ?, mar = ?, Apr = ?  where Class = ?";
+		String sql = "update 团支部建设 set may = ?, jun = ?, jul = ?, aug = ?, sep = ?,"
+				   + " oct = ?, nov = ?, dec = ?, jan = ?, feb = ?, mar = ?, Apr = ?  where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,may);
 		pst.setString(2,jun);
@@ -130,9 +139,15 @@ public class part1_4 extends HttpServlet {
 		pst.setString(11,mar);
 		pst.setString(12,Apr);
 		pst.setString(13, Class);
-		pst.executeUpdate();
+		pst.executeUpdate();//executeupdate()
 		pst.close();
 	}
-	
-
+	//在数据库没有该班级数据的情况下插入一条空语句
+	public void insert(String Class) throws SQLException {
+		String sql = "insert into 工作主题工作时间参与对象效果目标 values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		PreparedStatement pst = database.getpst(sql);
+		pst.setString(13,Class);
+		pst.execute();
+		pst.close();
+	}
 }

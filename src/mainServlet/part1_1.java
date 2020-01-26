@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import DB.database;
 import net.sf.json.JSONObject;
 
-//团支部建设
+//团支部信息
 public class part1_1 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
@@ -35,7 +35,7 @@ public class part1_1 extends HttpServlet {
 		}
 		if(flag == 1) {
 			try {
-				write(request,response);
+				update(request,response);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -50,26 +50,30 @@ public class part1_1 extends HttpServlet {
 		String Class =  request.getParameter("Class");
 		System.out.println("Class:"+Class);
 		
-		
-		String sql = "select * from 团支部建设 where Class = ?";
+		//准备sql语句
+		String sql = "select * from info where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);
 		ResultSet set = pst.executeQuery();
 		
 		
-		set.next();
-		String basic = set.getString("basic");
-		String specialty = set.getString("specialty");
-		String innovation = set.getString("innovation");
-		String goal = set.getString("goal");
-		System.out.println("b:"+basic);
-		System.out.println("s:"+specialty);
-		System.out.println("i:"+innovation);
-		System.out.println("g:"+goal);
-		
-		
-		
-		
+		String basic = "";
+		String specialty = "";
+		String innovation = "";
+		String goal = "";
+		//判断数据库中有无数据，若没有则插入一条空数据
+		if(set.next()) {
+			basic = set.getString("basic");
+			specialty = set.getString("specialty");
+			innovation = set.getString("innovation");
+			goal = set.getString("goal");
+			System.out.println("b:"+basic);
+			System.out.println("s:"+specialty);
+			System.out.println("i:"+innovation);
+			System.out.println("g:"+goal);
+		}
+		else
+			insert(Class);
 		//准备向前端发送的json数据
 		JSONObject jsonObject = new JSONObject();	
 		jsonObject.put("basic", basic);
@@ -79,15 +83,13 @@ public class part1_1 extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out= response.getWriter();
-		out.write(jsonObject.toString());
-	    
+		out.write(jsonObject.toString());    
 		pst.close();
 		set.close();
 
 	}
 	//更新数据库中的班级信息
-	public void write(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		
+	public void update(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		
 		//从json中获取Class，用于修改对应班级的信息
 		String Class = request.getParameter("Class");
@@ -102,7 +104,7 @@ public class part1_1 extends HttpServlet {
 		System.out.println("goal:"+goal);
 		String sql = "update 团支部建设 set basic = ?, specialty = ?, innovation = ?, goal = ?  where Class= ?";
 		
-		//准备sql语句并执行
+
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,basic);
 		pst.setString(2,specialty);
@@ -111,6 +113,14 @@ public class part1_1 extends HttpServlet {
 		pst.setString(5, Class);
 		pst.executeUpdate();
 		
+		pst.close();
+	}
+	//向数据库中插入空语句
+	public void insert(String Class) throws SQLException {
+		String sql = "insert into 团支部建设 values (?,?,?,?,?)";
+		PreparedStatement pst = database.getpst(sql);
+		pst.setString(5, Class);
+		pst.execute();//还是executeupdate
 		pst.close();
 	}
 	

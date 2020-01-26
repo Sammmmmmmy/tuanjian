@@ -58,6 +58,14 @@
   	<url-pattern>/工作日志/PART1/servlet/part1_7</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>part1_14</servlet-name>
+  	<servlet-class>mainServlet.part1_14</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part1_14</servlet-name>
+  	<url-pattern>/工作日志/PART1/servlet/part1_14</url-pattern>
+  </servlet-mapping>
 
   <servlet>
   	<servlet-name>login</servlet-name>

@@ -49,6 +49,7 @@ public class login extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		database.disconnect();
 		
 		
 	}

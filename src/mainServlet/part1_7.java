@@ -98,26 +98,8 @@ public class part1_7 extends HttpServlet {
 		
 		//将图片写入数据库和服务器
 		//用上传图片的时间和array中图片的顺序进行命名
-		int size = array.size();
-		String[] urls = rewrite(Class,size,array);
+		rewrite(Class,array);
 		
-		
-		
-		
-//		String imagebase64;
-//		int id;
-//		while(count!=size) {
-//			operation = imagejson.getInt("operation");
-//			if(operation == 0) {
-//				key = imagejson.getInt("key");
-//				delete(key);
-//			}
-//			else {
-//				base64 = imagejson.getString("base64");
-//				add(base64,Class);
-//			}
-//			count++;
-//		}
 	}
 	public void clear(String Class) throws SQLException {
 		//查询班级所有图片并从服务器上删除
@@ -142,8 +124,8 @@ public class part1_7 extends HttpServlet {
 	}
 	//生成图片的地址并写入数据库
 	//写入服务器指定dir中
-	public String[] rewrite(String Class,int size,JSONArray array) throws SQLException {
-
+	public void rewrite(String Class,JSONArray array) throws SQLException {
+		int size = array.size();
 		//对图片进行命名
 		SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH:mm:ss");
 		String date = df.format(new Date());
@@ -162,34 +144,29 @@ public class part1_7 extends HttpServlet {
 		}
 		pst.close();
 		
-		
-		
 		//将图片写入服务器
 		for(int i = 0;i<size;i++) {
 			Base64utilities.Base64ToImage(array.getString(i), urls[i]);
 		}
 		
-		
-		return urls;
-		
 	}
-	public void delete(int key) throws SQLException {
-			String sql = "delete from 团支部风采 where key = ?";
-			PreparedStatement pst = database.getpst(sql);
-			pst.setInt(1,key);
-			pst.execute();
-			pst.close();
-		
-	}
-	
-	public void add(String base64,String Class) throws SQLException {
-		String sql = "INSERT INTO 团支部风采 VALUES (?,?)";
-		PreparedStatement pst = database.getpst(sql);
-		pst.setString(1, base64);
-		pst.setString(2,Class);
-		pst.execute();
-		pst.close();
-		
-	}
+//	public void delete(int key) throws SQLException {
+//			String sql = "delete from 团支部风采 where key = ?";
+//			PreparedStatement pst = database.getpst(sql);
+//			pst.setInt(1,key);
+//			pst.execute();
+//			pst.close();
+//		
+//	}
+//	
+//	public void add(String base64,String Class) throws SQLException {
+//		String sql = "INSERT INTO 团支部风采 VALUES (?,?)";
+//		PreparedStatement pst = database.getpst(sql);
+//		pst.setString(1, base64);
+//		pst.setString(2,Class);
+//		pst.execute();
+//		pst.close();
+//		
+//	}
 
 }
