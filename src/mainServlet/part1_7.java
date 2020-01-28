@@ -49,14 +49,12 @@ public class part1_7 extends HttpServlet {
 		database.disconnect();
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		
 		String Class = request.getParameter("Class");
-		
+		//准备sql并执行得到结果集
 		String sql = "select * from 团支部风采 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
-		
 		//imagebase64数组
 		JSONArray array = new JSONArray();
 		int size = 0; 
@@ -67,7 +65,6 @@ public class part1_7 extends HttpServlet {
 		while(set.next()) {
 			//获取数据库中的图片地址
 			imageurl = set.getString("imageurl");
-			
 			//根据url获取服务器保存的图片的base64
 			imagebase64 = Base64utilities.ImageToBase64(imageurl);
 			
@@ -78,7 +75,6 @@ public class part1_7 extends HttpServlet {
 		JSONObject write = new JSONObject();
 		write.put("size",size);
 		write.put("array", array);
-		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out= response.getWriter();

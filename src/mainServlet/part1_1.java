@@ -73,17 +73,17 @@ public class part1_1 extends HttpServlet {
 			System.out.println("g:"+goal);
 		}
 		else
-			insert(Class);
+			insert(Class);//填空类的界面都需要首先判断结果集是否为空
 		//准备向前端发送的json数据
-		JSONObject jsonObject = new JSONObject();	
-		jsonObject.put("basic", basic);
-	    jsonObject.put("specialty", specialty);
-	    jsonObject.put("innovation", innovation);
-	    jsonObject.put("goal",goal);
+		JSONObject write = new JSONObject();	
+		write.put("basic", basic);
+		write.put("specialty", specialty);
+		write.put("innovation", innovation);
+		write.put("goal",goal);
 	    response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out= response.getWriter();
-		out.write(jsonObject.toString());    
+		out.write(write.toString());    
 		pst.close();
 		set.close();
 

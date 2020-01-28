@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DB.database;
-import Model.LeaMember;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -23,10 +22,7 @@ public class part1_2 extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		database.connect();
-		
-		String flag_string = request.getParameter("flag");
-		int flag = Integer.parseInt(flag_string);
-		
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		if(flag == 0)
 			try {
 				show(request,response);
@@ -41,24 +37,18 @@ public class part1_2 extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
 		database.disconnect();
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		
 		String Class = request.getParameter("Class");
-		
-		
+		//准备sql并执行得到结果集
 		String sql = "select * from 注册团员名单 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
-		
-		
+		//准备向前端发送的array和数组大小size
 		JSONArray array = new JSONArray();
 		JSONObject memjson;
-		
-		
 		int size = 0;
 		String memName;
 		String sex;
@@ -70,6 +60,7 @@ public class part1_2 extends HttpServlet {
 		String joinLeaDate;
 		while(set.next()) {
 			memjson = new JSONObject();
+			//从数据库中获取数据
 			memName = set.getString("memName");
 			sex = set.getString("sex");
 			nation = set.getString("nation");
@@ -78,7 +69,7 @@ public class part1_2 extends HttpServlet {
 			politicStatus = set.getString("politicStatus");
 			joinPartyDate = set.getString("joinPartyDate");
 			joinLeaDate = set.getString("joinLeaDate");
-			
+			//填充json
 			memjson.put("memName",memName);
 			memjson.put("sex",sex);
 			memjson.put("nation",nation);
@@ -87,44 +78,41 @@ public class part1_2 extends HttpServlet {
 			memjson.put("politicStatus",politicStatus);
 			memjson.put("joinPartyDate",joinPartyDate);
 			memjson.put("joinLeaDate",joinLeaDate);
-			
+			//添加至array
 			array.add(memjson);
 			size++;
 		}
 		
-		JSONObject output = new JSONObject();
-		output.put("size",size);
-		output.put("array", array);
-		
+		JSONObject write = new JSONObject();
+		write.put("size",size);
+		write.put("array", array);
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out= response.getWriter();
-		out.write(output.toString());
-		
+		out.write(write.toString());
+		//关闭数据库有关变量
 		pst.close();
 		set.close();
-		
-		
 	}
 	public void update(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException  {
-		
-
 		String Class = request.getParameter("Class");
 		JSONArray array = JSONArray.fromObject(request.getParameter("Array"));
-		
 		//首先删除数据库中该班级所有的团员信息
+		clear(Class);
+		//重写
+		rewrite(Class,array);
+	}
+	public void clear(String Class) throws SQLException {
 		String sql = "delete * from 注册团员名单 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		pst.execute();
 		pst.close();
-		
+	}
+	public void rewrite(String Class,JSONArray array) throws SQLException {
 		int size = array.size();
 		int count = 0;
-		System.out.println(size);
-		//从jsonarray中获取的memjson
 		JSONObject memjson;
-		
 		String memName;
 		String sex;
 		String nation;
@@ -133,12 +121,13 @@ public class part1_2 extends HttpServlet {
 		String politicStatus;
 		String joinPartyDate;
 		String joinLeaDate;
-		
-		//m中包含团员的信息
-		LeaMember m;
-		
+		//准备sql
+		String sql = "insert into 注册团员名单 values(?,?,?,?,?,?,?,?,?)";
+		PreparedStatement pst = database.getpst(sql);
 		while(count!=size) {
+			//从jsonarray中获取json
 			memjson = array.getJSONObject(count);
+			//再从json中获取需要写入数据库的信息
 			memName = memjson.getString("memName");
 			sex = memjson.getString("sex");
 			nation = memjson.getString("nation");
@@ -147,27 +136,20 @@ public class part1_2 extends HttpServlet {
 			politicStatus = memjson.getString("politicStatus");
 			joinPartyDate = memjson.getString("joinPartyDate");
 			joinLeaDate = memjson.getString("joinLeaDate");
-			
-			m = new LeaMember(memName, sex, nation,  nativePlace,birthday, politicStatus,joinPartyDate, joinLeaDate, Class);
-			savemem(m);
-			count++;
-			
-		}
-	}
-	public void savemem(LeaMember m) throws SQLException {
-			String sql = "INSERT INTO 注册团员名单 VALUES (?,?,?,?,?,?,?,?,?)";
-			PreparedStatement pst = database.getpst(sql);
-			pst.setString(1,m.getMemName());
-			pst.setString(2,m.getSex());
-			pst.setString(3,m.getNation());
-			pst.setString(4,m.getNativePlace());
-			pst.setString(5,m.getBirthday());
-			pst.setString(6,m.getPoliticStatus());
-			pst.setString(7,m.getJoinPartyDate());
-			pst.setString(8,m.getJoinLeaDate());
-			pst.setString(9,m.get_Class());
+			//填充pst
+			pst.setString(1,memName);
+			pst.setString(2,sex);
+			pst.setString(3,nation);
+			pst.setString(4,nativePlace);
+			pst.setString(5,birthday);
+			pst.setString(6,politicStatus);
+			pst.setString(7,joinPartyDate);
+			pst.setString(8,joinLeaDate);
+			pst.setString(9,Class);
 			pst.execute();
-			pst.close();
-		}
+			count++;		
+			}
+		pst.close();
+	}
   }
 

@@ -68,7 +68,6 @@ public class part1_6 extends HttpServlet {
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out= response.getWriter();
 	    out.write(jsonObject.toString());	
-	    
 	    //关闭数据库有关变量
 		pst.close();
 	    set.close();

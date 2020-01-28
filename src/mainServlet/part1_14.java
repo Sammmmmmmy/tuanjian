@@ -23,7 +23,6 @@ public class part1_14 extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		database.connect();
-		
 		int flag = Integer.parseInt(request.getParameter("flag"));
 		if(flag == 0)
 			try {
@@ -39,9 +38,7 @@ public class part1_14 extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
 		database.disconnect();
-
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String Class = request.getParameter("Class");
@@ -98,26 +95,21 @@ public class part1_14 extends HttpServlet {
 		JSONObject write = new JSONObject();
 		write.put("size",size);
 		write.put("array", array);
-		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out= response.getWriter();
 		out.write(write.toString());
 		pst.close();
 		set.close();
-		
-		
 	}
 	public void update(HttpServletRequest request, HttpServletResponse response) throws SQLException  {
 		String Class = request.getParameter("Class");
 		JSONArray array = JSONArray.fromObject(request.getParameter("array"));
-		
 		//先将数据库内容清除
 		clear(Class);
 		//再将前端发来的数据写入
 		rewrite(Class,array);
 	}
-	
 	public void clear(String Class) throws SQLException {
 		String sql = "delete from 年度团支部选举记录 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
@@ -174,23 +166,21 @@ public class part1_14 extends HttpServlet {
 		}
 		pst.close();
 	}
-	
-	
-	public void delete(int key) throws SQLException {
-			String sql = "delete from 团支部风采 where key = ?";
-			PreparedStatement pst = database.getpst(sql);
-			pst.setInt(1,key);
-			pst.execute();
-			pst.close();
-		
-	}
-	public void add(String base64,String Class) throws SQLException {
-		String sql = "INSERT INTO 团支部风采 VALUES (?,?)";
-		PreparedStatement pst = database.getpst(sql);
-		pst.setString(1, base64);
-		pst.setString(2,Class);
-		pst.execute();
-		pst.close();
-	}
-
+//后期修改时可能会用到
+//	public void delete(int key) throws SQLException {
+//			String sql = "delete from 团支部风采 where key = ?";
+//			PreparedStatement pst = database.getpst(sql);
+//			pst.setInt(1,key);
+//			pst.execute();
+//			pst.close();
+//		
+//	}
+//	public void add(String base64,String Class) throws SQLException {
+//		String sql = "INSERT INTO 团支部风采 VALUES (?,?)";
+//		PreparedStatement pst = database.getpst(sql);
+//		pst.setString(1, base64);
+//		pst.setString(2,Class);
+//		pst.execute();
+//		pst.close();
+//	}
 }

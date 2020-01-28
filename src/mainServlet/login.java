@@ -21,15 +21,12 @@ public class login extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		database.connect();
-		
 		//向前端发送int类型的pass,pass==1时代表密码正确
 		int pass = 1;
-		
-		
+		//前端数据
 		String Class = request.getParameter("Class");
 		String pwd = request.getParameter("pwd");
-		
-		
+		//使用选择语句，如果set有值，则pass
 		String sql = "select * from login where Class = ? and pwd = ?";
 		PreparedStatement pst = database.getpst(sql);
 		try {
@@ -48,10 +45,7 @@ public class login extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		database.disconnect();
-		
-		
 	}
 
 }

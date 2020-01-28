@@ -23,7 +23,6 @@ public class info extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("连接Servlet成功");
 		database.connect();
-		
 		int flag = Integer.parseInt(request.getParameter("flag"));
 		if(flag == 0) {
 			try {
@@ -41,12 +40,10 @@ public class info extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
 	    database.disconnect();
 	}
 	//向前端发送数据库中的数据
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		
 		String Class =  request.getParameter("Class");
 		System.out.println("Class:"+Class);
 		
