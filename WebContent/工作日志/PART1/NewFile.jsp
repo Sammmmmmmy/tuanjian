@@ -14,7 +14,7 @@
 	{
 		$.ajax({
 		type:"POST",
-		url:"Servlet/part1_1",
+		url:"servlet/part1_1",
 		success:function(data,status){},
 		data:{
 				flag:0,
@@ -29,7 +29,7 @@
 	}
 	</script>
 <button id = "button" onclick="show()" >测试</button>
-<form action="Servlet/part1_1" method="post">
+<form action="servlet/part1_1" method="post">
 	<input type="submit" value="Post方式请求HelloServlet">
 </form>
 </body>

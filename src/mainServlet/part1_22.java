@@ -13,7 +13,6 @@ import DB.database;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-
 //团员奖惩记录
 public class part1_22 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,8 +20,7 @@ public class part1_22 extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		database.connect();
-		String flag_string = request.getParameter("flag");
-		int flag = Integer.parseInt(flag_string);
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		if(flag == 0)
 			try {
 				show(request,response);
@@ -82,24 +80,12 @@ public class part1_22 extends HttpServlet {
 	}
 	public void update(HttpServletRequest request, HttpServletResponse response) throws SQLException  {
 		JSONArray array = JSONArray.fromObject(request.getParameter("array"));
-		String Class = request.getString("Class");
+		String Class = request.getParameter("Class");
 		//清空
 		clear(Class);
 		//重写
 		rewrite(Class,array);
 		
-	}
-	public void savemandp(MandP m) throws SQLException {
-			String sql = "INSERT INTO 注册团员名单 VALUES (?,?,?,?,?,?,?,?)";
-			PreparedStatement pst = database.getpst(sql);
-			pst.setString(1,m.getStuMPName());
-			pst.setString(2,m.getMPContent());
-			pst.setString(3,m.getMPlevel());
-			pst.setString(4,m.getMPDate());
-			pst.setString(5,m.getMPCategory());
-			pst.setString(6,m.get_Class());
-			pst.execute();
-			pst.close();
 	}
 	public void clear(String Class) throws SQLException {
 		String sql = "delete * from where Class = ?";
@@ -108,17 +94,18 @@ public class part1_22 extends HttpServlet {
 		pst.execute();
 		pst.close();
 	}
-	public void rewrite(String Class,JSONArray array) {
+	public void rewrite(String Class,JSONArray array) throws SQLException {
 		int size = array.size();
 		int count = 0;
-		String sql = "insert into 支部团员奖惩记录";
+		String sql = "insert into 支部团员奖惩记录 values (?,?,?,?,?,?)";
+		PreparedStatement pst = database.getpst(sql);
+		//从JSONArray中获取每一个奖惩记录JSON并写入到数据库
 		JSONObject mandpjson;
 		String stuMPName;
 		String MPContent;
 		String MPlevel;
 		String MPDate;
 		String MPCategory;
-
 		while(count!=size) {
 			mandpjson = array.getJSONObject(count);
 			stuMPName = mandpjson.getString("stuMPName");
@@ -126,10 +113,15 @@ public class part1_22 extends HttpServlet {
 			MPlevel = mandpjson.getString("MPlevel");
 			MPDate = mandpjson.getString("MPDate");
 			MPCategory = mandpjson.getString("MPCategory");
-			m = new MandP(stuMPName,MPContent,MPlevel,MPDate,MPCategory ,Class);
-			savemandp(m);
+			pst.setString(1,stuMPName);
+			pst.setString(2,MPContent);
+			pst.setString(3,MPlevel);
+			pst.setString(4,MPDate);
+			pst.setString(5,MPCategory);
+			pst.setString(6,Class);
+			pst.execute();
 			count++;
 		}
+		pst.close();
 	}
-
 }

@@ -119,6 +119,10 @@ public class part1_1 extends HttpServlet {
 	public void insert(String Class) throws SQLException {
 		String sql = "insert into 团支部建设 values (?,?,?,?,?)";
 		PreparedStatement pst = database.getpst(sql);
+		pst.setString(1, "");
+		pst.setString(2, "");
+		pst.setString(3, "");
+		pst.setString(4, "");
 		pst.setString(5, Class);
 		pst.execute();//还是executeupdate
 		pst.close();

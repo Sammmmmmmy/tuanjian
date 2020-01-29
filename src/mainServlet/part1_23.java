@@ -12,20 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DB.database;
-import Model.MandP;
-import Model.LeaMember;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-
+//主题团日活动
 public class part1_23 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		database.connect();
-		String flag_string = request.getParameter("flag");
-		int flag = Integer.parseInt(flag_string);
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		if(flag == 0)
 			try {
 				show(request,response);
@@ -43,36 +40,34 @@ public class part1_23 extends HttpServlet {
 		database.disconnect();
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		String json_string = request.getParameter("JSON");
-		JSONObject json = JSONObject.fromObject(json_string);
-		String Class = json.getString("Class");
+		String Class = request.getParameter("Class");
 		String sql = "select * from 支部团员奖惩记录 where 班级 = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
-		
+		//准备向前端发送的JSONArray
 		JSONArray array = new JSONArray();
-		JSONObject mandpjson;
+		JSONObject activityjson;
 		int size = 0;
-		String stuMPName;
-		String MPContent;
-		String MPlevel;
-		String MPDate;
-		String MPCategory;
+		String ActivTheme;
+		String ActivDate;
+		String ActivOrganizer;
+		String ActivPaticipant;
+		String ActivContent;
 		while(set.next()) {
-			mandpjson = new JSONObject();
-			stuMPName = set.getString("stuMPName");
-			MPContent = set.getString("MPContent");
-			MPlevel = set.getString("MPlevel");
-			MPDate = set.getString("MPDate");
-			MPCategory = set.getString("MPCategory");
-			mandpjson.put("stuMPName", stuMPName);
-			mandpjson.put("MPContent",MPContent);
-			mandpjson.put("MPlevel",MPlevel);
-			mandpjson.put("MPDate",MPDate);
-			mandpjson.put("MPCategory",MPCategory);
-
-			array.add(mandpjson);
+			activityjson = new JSONObject();
+			ActivTheme = set.getString("stuMPName");
+			ActivDate = set.getString("MPContent");
+			ActivOrganizer = set.getString("MPlevel");
+			ActivPaticipant = set.getString("MPDate");
+			ActivContent = set.getString("MPCategory");
+			activityjson.put("ActivTheme", ActivTheme);
+			activityjson.put("ActivDate",ActivDate);
+			activityjson.put("ActivOrganizer",ActivOrganizer);
+			activityjson.put("ActivPaticipant",ActivPaticipant);
+			activityjson.put("ActivContent",ActivContent);
+			//添加至array
+			array.add(activityjson);
 			size++;
 		}
 		JSONObject write = new JSONObject();
@@ -84,56 +79,52 @@ public class part1_23 extends HttpServlet {
 		out.write(write.toString());
 		pst.close();
 		set.close();
-		
-		
 	}
 	public void update(HttpServletRequest request, HttpServletResponse response) throws SQLException  {
-		
-		
-		String json_string = request.getParameter("JSON");
-		JSONObject json = JSONObject.fromObject(json_string);
-		JSONArray array = json.getJSONArray("Array");
-		String Class = json.getString("Class");
-		
+		JSONArray array = JSONArray.fromObject(request.getParameter("array"));
+		String Class = request.getParameter("Class");
+		//清空
+		clear(Class);
+		//重写
+		rewrite(Class,array);
+	}
+	public void clear(String Class) throws SQLException {
 		String sql = "delete * from where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);
-		
+		pst.execute();
+		pst.close();
+	}
+	public void rewrite(String Class,JSONArray array) throws SQLException {
 		int size = array.size();
 		int count = 0;
-		System.out.println(size);
-		
-		JSONObject mandpjson;
-		String stuMPName;
-		String MPContent;
-		String MPlevel;
-		String MPDate;
-		String MPCategory;
-		MandP m;
+		JSONObject activityjson;
+		String ActivTheme;
+		String ActivDate;
+		String ActivOrganizer;
+		String ActivPaticipant;
+		String ActivContent;
+		//准备pst
+		String sql = "insert into 主题团日活动 values (?,?,?,?,?,?)";
+		PreparedStatement pst = database.getpst(sql);
 		while(count!=size) {
-			mandpjson = array.getJSONObject(count);
-			stuMPName = mandpjson.getString("stuMPName");
-			MPContent = mandpjson.getString("MPContent");
-			MPlevel = mandpjson.getString("MPlevel");
-			MPDate = mandpjson.getString("MPDate");
-			MPCategory = mandpjson.getString("MPCategory");
-			m = new MandP(stuMPName,MPContent,MPlevel,MPDate,MPCategory ,Class);
-			savemandp(m);
-			count++;
-			
-		}
-	}
-	public void savemandp(MandP m) throws SQLException {
-			String sql = "INSERT INTO 注册团员名单 VALUES (?,?,?,?,?,?,?,?)";
-			PreparedStatement pst = database.getpst(sql);
-			pst.setString(1,m.getStuMPName());
-			pst.setString(2,m.getMPContent());
-			pst.setString(3,m.getMPlevel());
-			pst.setString(4,m.getMPDate());
-			pst.setString(5,m.getMPCategory());
-			pst.setString(6,m.get_Class());
+			activityjson = array.getJSONObject(count);
+			ActivTheme = activityjson.getString("stuMPName");
+			ActivDate = activityjson.getString("MPContent");
+			ActivOrganizer = activityjson.getString("MPlevel");
+			ActivPaticipant = activityjson.getString("MPDate");
+			ActivContent = activityjson.getString("MPCategory");
+			//填充pst并执行
+			pst.setString(1,ActivTheme);
+			pst.setString(2,ActivDate);
+			pst.setString(3,ActivOrganizer);
+			pst.setString(4,ActivPaticipant);
+			pst.setString(5,ActivContent);
+			pst.setString(6,Class);
 			pst.execute();
-			pst.close();
+			count++;
 		}
+		pst.close();
+	}
 
 }

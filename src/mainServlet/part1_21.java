@@ -90,7 +90,7 @@ public class part1_21 extends HttpServlet {
 		rewrite(Class,array);
 	}
 	public void clear(String Class) throws SQLException {
-		String sql = "delete * from 团支部获奖情况 where Class = ?";
+		String sql = "delete * from 团支部获奖情况 values (?,?,?,?,?)";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		pst.execute();
