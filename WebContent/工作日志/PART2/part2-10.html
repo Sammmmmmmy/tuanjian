@@ -13,11 +13,58 @@
                             <p class="font-2">EDUCATION AND EVALUATION OF LEAGUE MEMBERS</p>
                     </div>
             </div>
-        <div class="input" contentEditable></div>
+        <div class="input" contentEditable id="edu-and-eva"></div>
     </div>
     <div class="buttons">
-        <button id="change">修改</button>
-        <button id="submit">提交</button>
+        <button id="submit" onclick="submit()">提交</button>
 </div>
 </body>
+<script src="../scripts/jquery.js"></script>
+<script>
+ var Class = sessionStorage.getItem("class");
+    var count = 0;//这是会议的数量
+
+    window.onload = function () {
+        show();
+    }
+
+    $(window).bind('beforeunload', function () {
+        submit();
+    });
+
+    function show() {
+        $.ajax({
+            type: "POST",
+            url: "servlet/part2_10",
+            data: {
+                "Class": Class,
+                "flag": 0
+            },
+            success:function(data,status){
+                $("#edu-and-eva").text(data.eduAndEva);
+            },
+            error:function(data,status){
+                alert("出错啦，找管理员处理把");
+            }
+        });
+    }
+
+    function submit(){
+        $.ajax({
+            type: "POST",
+            url: "servlet/part2_10",
+            data: {
+                "Class": Class,
+                "flag": 1,
+                "eduAndEva":$("#edu-and-eva").text()
+            },
+            success:function(data,status){
+                console.log("上传成功");
+            },
+            error:function(data,status){
+                alert("出错啦，找管理员处理把");
+            }
+        });
+    }
+</script>
 </html>

@@ -16,6 +16,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
+//重复类
 //团支部获奖情况
 public class part1_21 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,6 +52,7 @@ public class part1_21 extends HttpServlet {
 		JSONArray array = new JSONArray();
 		JSONObject awardjson = new JSONObject();
 		int size = 0; 
+		//准备除Class外的4条信息
 		String awardName;
 		String awardLevel;
 		String awardDate;
@@ -62,7 +64,7 @@ public class part1_21 extends HttpServlet {
 			awardLevel = set.getString("awardLevel");
 			awardDate = set.getString("awardDate");
 			awardCategory = set.getString("awardCategory");
-			//填充json
+			//填充JSON
 			awardjson.put("awardName", awardName);
 			awardjson.put("awardLevel",awardLevel);
 			awardjson.put("awardDate",awardDate);
@@ -99,14 +101,15 @@ public class part1_21 extends HttpServlet {
 	public void rewrite(String Class,JSONArray array) throws SQLException{
 		int size = array.size();
 		int count = 0;
-		String sql = "insert into 团支部获奖情况 where Class = ?";
-		PreparedStatement pst = database.getpst(sql);
-		//从array中获取获奖json
 		JSONObject awardjson;
 		String awardName;
 		String awardLevel;
 		String awardDate;
 		String awardCategory;
+		//准备sql并得到pst
+		String sql = "insert into 团支部获奖情况 where Class = ?";
+		PreparedStatement pst = database.getpst(sql);
+		pst.setString(5, Class);
 		while(count!=size) {
 			awardjson = array.getJSONObject(count);
 			//某一条获奖信息
@@ -114,11 +117,11 @@ public class part1_21 extends HttpServlet {
 			awardLevel = awardjson.getString("awardLevel");
 			awardDate = awardjson.getString("awardDate");
 			awardCategory = awardjson.getString("awardCategory");
+			//填充pst
 			pst.setString(1, awardName);
 			pst.setString(2, awardLevel);
 			pst.setString(3, awardDate);
 			pst.setString(4, awardCategory);
-			pst.setString(5, Class);
 			pst.execute();
 			count++;
 		}

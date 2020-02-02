@@ -15,7 +15,7 @@ import DB.database;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-
+//重复类
 //团员发展
 public class part1_19 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -23,7 +23,6 @@ public class part1_19 extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		database.connect();
-		
 		int flag = Integer.parseInt(request.getParameter("flag"));
 		if(flag == 0)
 			try {
@@ -39,28 +38,25 @@ public class part1_19 extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
 		database.disconnect();
-
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String Class = request.getParameter("Class");
-		//准备sql语句
+		//准备sql语句并执行得到ResultSet
 		String sql = "select * from 团员发展 where Class = ?";
-		//从数据库中查询团员发展信息
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
-		//将数据库的信息写入json数组中
+		//准备JSONArray和JSON
 		JSONArray array = new JSONArray();
 		JSONObject member;
+		int size = 0; 
+		//准备除Class外的3条信息
 		String DPerCondition;
         String DMemcon;
         String DInvestigation;
-		int size = 0; 
 		while(set.next()) {
 			member= new JSONObject();
-			//从结果集set获取String
 			DPerCondition = set.getString("DPerCondition");
 			DMemcon = set.getString("DMemcon");
 			DInvestigation = set.getString("DInvestigation");
@@ -114,16 +110,16 @@ public class part1_19 extends HttpServlet {
         //准备sql
         String sql = "insert into 年度团支部选举记录 values(?,?,?,?)";
         PreparedStatement pst = database.getpst(sql);
+		pst.setString(4,Class);
 		while(count != size) {
 			meeting = array.getJSONObject(count);
 			DPerCondition = meeting.getString("selectDate");
 			DMemcon = meeting.getString("selectPlace");
 			DInvestigation = meeting.getString("joinSelNum");
-			
+			//填充pst
 			pst.setString(1,DPerCondition);
 			pst.setString(2,DMemcon);
 			pst.setString(3,DInvestigation);
-			pst.setString(4,Class);
 			pst.execute();
 		}
 		pst.close();

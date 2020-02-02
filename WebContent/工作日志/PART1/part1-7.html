@@ -39,63 +39,65 @@
 
 <script type="text/javascript" src="../scripts/jquery.js"></script>
 <script>
-    //var Class = sessionStorage.getItem("class");
+    var Class = sessionStorage.getItem("class");
 
     var imgBase64 = new Array();//所有上传过的图片都放在这里，包括在界面上删除的
     var imgConfirm = new Array();//确认这个图片有没有删除，如果没有被删除，数组对应下标为1，删除了的对应下标为0
     var count = 0;
 
-    // window.onload = function () {
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "servlet/part1_7",
-    //         data: {
-    //             "flag": 0,
-    //             "Class": Class,
-    //         },
-    //         success: function (data, status) {
-    //             //生成图片div
-    //             count=0;
-    //             for (var i = 0; i < data.array.length; i++) {
-    //                 var outsideDiv = document.createElement("div"),
-    //                     deleteDiv = document.createElement("div"),
-    //                     deleteImg = document.createElement("img"),
-    //                     div = document.createElement("div"),
-    //                     img = document.createElement("img");
+    window.onload = function () {
+        $.ajax({
+            type: "POST",
+            url: "servlet/part1_7",
+            data: {
+                "flag": 0,
+                "Class": Class,
+            },
+            success: function (data, status) {
+                //生成图片div
+                count = 0;
+                if (data.size == 0) { }
+                else {
+                    for (var i = 0; i < data.array.length; i++) {
+                        var outsideDiv = document.createElement("div"),
+                            deleteDiv = document.createElement("div"),
+                            deleteImg = document.createElement("img"),
+                            div = document.createElement("div"),
+                            img = document.createElement("img");
 
-    //                 outsideDiv.className = 'outside-div';
-    //                 deleteDiv.className = 'delete';
-    //                 deleteImg.src = '../images/删除.png';
-    //                 deleteImg.id = "delete-" + count;
+                        outsideDiv.className = 'outside-div';
+                        deleteDiv.className = 'delete';
+                        deleteImg.src = '../images/删除.png';
+                        deleteImg.id = "delete-" + count;
 
-    //                 deleteImg.onclick = (function (param1) {
-    //                     var p1 = param1;
-    //                     return function () {
-    //                         deletePic(param1);
-    //                     }
-    //                 })(count);
+                        deleteImg.onclick = (function (param1) {
+                            var p1 = param1;
+                            return function () {
+                                deletePic(param1);
+                            }
+                        })(count);
 
-    //                 div.className = 'pic';
+                        div.className = 'pic';
 
-    //                 deleteDiv.append(deleteImg);
-    //                 outsideDiv.append(deleteDiv);
+                        deleteDiv.append(deleteImg);
+                        outsideDiv.append(deleteDiv);
 
-    //                 img.src = data.array[i];
-    //                 imgBase64[count] = data.array[i];
-    //                 imgConfirm[count] = 1;
-    //                 div.appendChild(img);
-    //                 outsideDiv.append(div);
-    //                 imgs.appendChild(outsideDiv);
-    //                 count++;
+                        img.src = data.array[i];
+                        imgBase64[count] = data.array[i];
+                        imgConfirm[count] = 1;
+                        div.appendChild(img);
+                        outsideDiv.append(div);
+                        imgs.appendChild(outsideDiv);
+                        count++;
+                    }
+                }
 
-    //             }
-
-    //         },
-    //         error: function (data, status) {
-    //             alert("出错啦，找管理员处理把！");
-    //         }
-    //     });
-    // }
+            },
+            error: function (data, status) {
+                alert("出错啦，找管理员处理把！");
+            }
+        });
+    }
 
     $(document).ready(function () {
         /*
@@ -171,7 +173,7 @@
     //提交的时候，遍历一下图片数组
     function submit() {
         var finalImg = [];
-        for (var i = 0; i < imgBase64.length; i++) {
+        for (var i = 1; i <= imgBase64.length; i++) {
             if (imgConfirm[i] == 1) {
                 finalImg.push(imgBase64[i]);
             }
@@ -196,9 +198,9 @@
         });
     }
 
-    // $(window).bind('beforeunload', function () {
-    //     submit();
-    // });
+    $(window).bind('beforeunload', function () {
+        submit();
+    });
 
 
 </script>

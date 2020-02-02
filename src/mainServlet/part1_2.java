@@ -15,6 +15,7 @@ import DB.database;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+//重复类
 //注册团员名单
 public class part1_2 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,6 +51,7 @@ public class part1_2 extends HttpServlet {
 		JSONArray array = new JSONArray();
 		JSONObject memjson;
 		int size = 0;
+		//准备除Class外的8条信息
 		String memName;
 		String sex;
 		String nation;
@@ -69,7 +71,7 @@ public class part1_2 extends HttpServlet {
 			politicStatus = set.getString("politicStatus");
 			joinPartyDate = set.getString("joinPartyDate");
 			joinLeaDate = set.getString("joinLeaDate");
-			//填充json
+			//填充JSON
 			memjson.put("memName",memName);
 			memjson.put("sex",sex);
 			memjson.put("nation",nation);
@@ -82,7 +84,7 @@ public class part1_2 extends HttpServlet {
 			array.add(memjson);
 			size++;
 		}
-		
+		//发送给前端的JSON
 		JSONObject write = new JSONObject();
 		write.put("size",size);
 		write.put("array", array);
@@ -121,13 +123,12 @@ public class part1_2 extends HttpServlet {
 		String politicStatus;
 		String joinPartyDate;
 		String joinLeaDate;
-		//准备sql
+		//准备sql并得到pst
 		String sql = "insert into 注册团员名单 values(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement pst = database.getpst(sql);
+		pst.setString(9,Class);
 		while(count!=size) {
-			//从jsonarray中获取json
 			memjson = array.getJSONObject(count);
-			//再从json中获取需要写入数据库的信息
 			memName = memjson.getString("memName");
 			sex = memjson.getString("sex");
 			nation = memjson.getString("nation");
@@ -145,7 +146,6 @@ public class part1_2 extends HttpServlet {
 			pst.setString(6,politicStatus);
 			pst.setString(7,joinPartyDate);
 			pst.setString(8,joinLeaDate);
-			pst.setString(9,Class);
 			pst.execute();
 			count++;		
 			}

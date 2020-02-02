@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
@@ -13,6 +14,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
   <servlet>
   	<servlet-name>part1_1</servlet-name>
   	<servlet-class>mainServlet.part1_1</servlet-class>
@@ -40,7 +42,7 @@
   	<url-pattern>/工作日志/PART1/servlet/part1_4</url-pattern>
   </servlet-mapping>
   
-   <servlet>
+  <servlet>
   	<servlet-name>part1_6</servlet-name>
   	<servlet-class>mainServlet.part1_6</servlet-class>
   </servlet>
@@ -49,7 +51,7 @@
   	<url-pattern>/工作日志/PART1/servlet/part1_6</url-pattern>
   </servlet-mapping>
   
-   <servlet>
+  <servlet>
   	<servlet-name>part1_7</servlet-name>
   	<servlet-class>mainServlet.part1_7</servlet-class>
   </servlet>
@@ -57,7 +59,7 @@
   	<servlet-name>part1_7</servlet-name>
   	<url-pattern>/工作日志/PART1/servlet/part1_7</url-pattern>
   </servlet-mapping>
-  
+
   <servlet>
   	<servlet-name>part1_14</servlet-name>
   	<servlet-class>mainServlet.part1_14</servlet-class>
@@ -67,7 +69,7 @@
   	<url-pattern>/工作日志/PART1/servlet/part1_14</url-pattern>
   </servlet-mapping>
   
-    <servlet>
+  <servlet>
   	<servlet-name>part1_19</servlet-name>
   	<servlet-class>mainServlet.part1_19</servlet-class>
   </servlet>
@@ -76,7 +78,7 @@
   	<url-pattern>/工作日志/PART1/servlet/part1_19</url-pattern>
   </servlet-mapping>
   
-    <servlet>
+  <servlet>
   	<servlet-name>part1_20</servlet-name>
   	<servlet-class>mainServlet.part1_20</servlet-class>
   </servlet>
@@ -85,7 +87,7 @@
   	<url-pattern>/工作日志/PART1/servlet/part1_20</url-pattern>
   </servlet-mapping>
   
-    <servlet>
+  <servlet>
   	<servlet-name>part1_21</servlet-name>
   	<servlet-class>mainServlet.part1_21</servlet-class>
   </servlet>
@@ -94,7 +96,7 @@
   	<url-pattern>/工作日志/PART1/servlet/part1_21</url-pattern>
   </servlet-mapping>
   
-    <servlet>
+  <servlet>
   	<servlet-name>part1_22</servlet-name>
   	<servlet-class>mainServlet.part1_22</servlet-class>
   </servlet>
@@ -103,16 +105,60 @@
   	<url-pattern>/工作日志/PART1/servlet/part1_22</url-pattern>
   </servlet-mapping>
   
-    <servlet>
-  	<servlet-name>part1_23</servlet-name>
+  <servlet>
+  	<servlet-name>part2_3</servlet-name>
   	<servlet-class>mainServlet.part1_23</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>part1_23</servlet-name>
-  	<url-pattern>/工作日志/PART1/servlet/part1_23</url-pattern>
+  	<servlet-name>part2_3</servlet-name>
+  	<url-pattern>/工作日志/PART2/servlet/part2_3</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>part2_6</servlet-name>
+  	<servlet-class>mainServlet.part2_6</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part2_6</servlet-name>
+  	<url-pattern>/工作日志/PART2/servlet/part2_6</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>part2_8</servlet-name>
+  	<servlet-class>mainServlet.part2_8</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part2_8</servlet-name>
+  	<url-pattern>/工作日志/PART2/servlet/part2_8</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>part2_10</servlet-name>
+  	<servlet-class>mainServlet.part2_10</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part2_10</servlet-name>
+  	<url-pattern>/工作日志/PART2/servlet/part2_10</url-pattern>
+  </servlet-mapping>
 
+  <servlet>
+  	<servlet-name>part2_11</servlet-name>
+  	<servlet-class>mainServlet.part2_11</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part2_11</servlet-name>
+  	<url-pattern>/工作日志/PART2/servlet/part2_11</url-pattern>
+  </servlet-mapping>  
+
+  <servlet>
+  	<servlet-name>part2_14</servlet-name>
+  	<servlet-class>mainServlet.part2_14</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>part2_14</servlet-name>
+  	<url-pattern>/工作日志/PART2/servlet/part2_14</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
   	<servlet-name>login</servlet-name>
   	<servlet-class>mainServlet.login</servlet-class>

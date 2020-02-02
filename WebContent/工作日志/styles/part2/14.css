@@ -23,6 +23,17 @@ table td{
     width: 150px;
 }
 
+.td-1{
+    width: 120px;
+    color: black;
+    font-weight: 500;
+}
+
+.td-2{
+    width: 80px;
+}
+
+
 .buttons {
     margin: 0 auto;
     width: 180px;

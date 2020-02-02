@@ -15,6 +15,7 @@ import DB.database;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+//重复类
 //主题团日活动
 public class part1_23 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -15,7 +15,7 @@ import DB.database;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-
+//重复类
 //年度团支部选举记录
 public class part1_14 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,14 +42,15 @@ public class part1_14 extends HttpServlet {
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String Class = request.getParameter("Class");
-		//准备sql语句
+		//准备sql语句并执行得到ResultSet
 		String sql = "select * from 年度团支部选举记录 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
-		
+		//准备JSONArray和每一个JSON
 		JSONArray array = new JSONArray();
 		JSONObject meeting;
+		//准备除Class外的11条信息
 		String selectDate;
         String selectPlace;
         String joinSelNum;
@@ -75,7 +76,7 @@ public class part1_14 extends HttpServlet {
 			selResult = set.getString("selResult");
 			demonsWay = set.getString("demonsWay");
 			demonsDate = set.getString("demonsDate");
-			
+			//填充JSON
 			meeting.put("selectDate",selectDate);
 			meeting.put("selectPlace",selectPlace);
 			meeting.put("joinSelNum",joinSelNum);
@@ -87,11 +88,11 @@ public class part1_14 extends HttpServlet {
 			meeting.put("selResult",selResult);
 			meeting.put("demonsWay",demonsWay);
 			meeting.put("demonsDate",demonsDate);
-			
+			//添加至array
 			array.add(meeting);
 			size++;
 		}
-		
+		//发送给前端
 		JSONObject write = new JSONObject();
 		write.put("size",size);
 		write.put("array", array);
@@ -133,9 +134,10 @@ public class part1_14 extends HttpServlet {
         String selResult;
         String demonsWay;
         String demonsDate;
-        
+        //准备sql并得到pst
         String sql = "insert into 年度团支部选举记录 values(?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement pst = database.getpst(sql);
+        pst.setString(12,Class);
 		while(count != size) {
 			meeting = array.getJSONObject(count);
 			selectDate = meeting.getString("selectDate");
@@ -149,7 +151,7 @@ public class part1_14 extends HttpServlet {
 			selResult = meeting.getString("selResult");
 			demonsWay = meeting.getString("demonsWay");
 			demonsDate = meeting.getString("demonsDate");
-			
+			//填充pst
 			pst.setString(1,selectDate);
 			pst.setString(2,selectPlace);
 			pst.setString(3,joinSelNum);
@@ -161,7 +163,6 @@ public class part1_14 extends HttpServlet {
 			pst.setString(9,selResult);
 			pst.setString(10,demonsWay);
 			pst.setString(11,demonsDate);
-			pst.setString(12,Class);
 			pst.execute();
 		}
 		pst.close();

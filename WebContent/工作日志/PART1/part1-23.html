@@ -171,6 +171,10 @@
 
                     bigBox.append(theTable);
                 }
+
+                if(data.size==0){
+                    addTable();
+                }
             },
             error: function () {
                 alert("出错啦，快找管理员处理！");

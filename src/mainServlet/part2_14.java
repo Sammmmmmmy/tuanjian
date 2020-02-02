@@ -16,8 +16,8 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 //重复类
-//支部大会-会议记录
-public class part2_3 extends HttpServlet {
+//团课-团课记录
+public class part2_14 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
@@ -42,44 +42,35 @@ public class part2_3 extends HttpServlet {
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String Class = request.getParameter("Class");
-		String sql = "select * from 支部大会-会议记录 where 班级 = ?";
+		String sql = "select * from 团课-团课记录 where 班级 = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
 		//准备向前端发送的JSONArray
 		JSONArray array = new JSONArray();
-		JSONObject genJSON;
+		JSONObject LecJSON;
 		int size = 0;
-		//准备除Class外的8条数据
-		String genDate;
-		String genAddr;
-		String genHost;
-		String genTheme;
-		int genParticipantNum;
-		String genContent;
-		String genCondition;
-		String genMSum;
+		//准备除Class外的5条数据
+		String LecDate;
+		String LecAddr;
+		String LecTheme;
+		int LecParticipantNum;
+		String LecContent;
 		while(set.next()) {
-			genJSON = new JSONObject();
-			genDate = set.getString("genDate");
-			genAddr = set.getString("genAddr");
-			genHost = set.getString("genHost");
-			genTheme = set.getString("genTheme");
-			genParticipantNum = set.getInt("genParticipantNum");
-			genContent = set.getString("genContent");
-			genCondition = set.getString("genCondition");
-			genMSum = set.getString("genMSum");
+			LecJSON = new JSONObject();
+			LecDate = set.getString("LecDate");
+			LecAddr = set.getString("LecAddr");
+			LecTheme = set.getString("LecTheme");
+			LecParticipantNum = set.getInt("LecParticipantNum");
+			LecContent = set.getString("LecContent");
 			//填充每一个genJOSN
-			genJSON.put("genDate", genDate);
-			genJSON.put("genAddr",genAddr);
-			genJSON.put("genHost",genHost);
-			genJSON.put("genTheme",genTheme);
-			genJSON.put("genParticipantNum",genParticipantNum);
-			genJSON.put("genContent",genContent);
-			genJSON.put("genCondition",genCondition);
-			genJSON.put("genMSum",genMSum);
+			LecJSON.put("LecJSON", LecJSON);
+			LecJSON.put("LecAddr",LecAddr);
+			LecJSON.put("LecTheme",LecTheme);
+			LecJSON.put("LecParticipantNum",LecParticipantNum);
+			LecJSON.put("LecContent",LecContent);
 			//添加至array
-			array.add(genJSON);
+			array.add(LecJSON);
 			size++;
 		}
 		JSONObject write = new JSONObject();
@@ -102,7 +93,7 @@ public class part2_3 extends HttpServlet {
 	}
 	
 	public void clear(String Class) throws SQLException {
-		String sql = "delete * from 支部大会-会议记录 where Class = ?";
+		String sql = "delete * from 团课-团课记录 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);
 		pst.execute();
@@ -111,38 +102,29 @@ public class part2_3 extends HttpServlet {
 	public void rewrite(String Class,JSONArray array) throws SQLException {
 		int size = array.size();
 		int count = 0;
-		JSONObject genJSON;
-		String genDate;
-		String genAddr;
-		String genHost;
-		String genCondition;
-		String genTheme;
-		int genParticipantNum;
-		String genContent;
-		String genMSum;
+		JSONObject LecJSON;
+		String LecDate;
+		String LecAddr;
+		String LecTheme;
+		int LecParticipantNum;
+		String LecContent;
 		//准备pst
-		String sql = "insert into 支部大会-会议记录 values (?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into 团课-团课记录 values (?,?,?,?,?,?)";
 		PreparedStatement pst = database.getpst(sql);
-		pst.setString(9,Class);
+		pst.setString(6,Class);
 		while(count!=size) {
-			genJSON = array.getJSONObject(count);
-			genDate = genJSON.getString("genDate");
-			genAddr = genJSON.getString("genAddr");
-			genHost = genJSON.getString("genHost");
-			genCondition = genJSON.getString("genCondition");
-			genTheme = genJSON.getString("genTheme");
-			genParticipantNum = genJSON.getInt("genParticipantNum");
-			genContent = genJSON.getString("genContent");
-			genMSum = genJSON.getString("genMSum");
+			LecJSON = array.getJSONObject(count);
+			LecDate = LecJSON.getString("LecDate");
+			LecAddr = LecJSON.getString("LecAddr");
+			LecTheme = LecJSON.getString("LecTheme");
+			LecParticipantNum = LecJSON.getInt("LecParticipantNum");
+			LecContent = LecJSON.getString("LecContent");
 			//填充pst并执行
-			pst.setString(1,genDate);
-			pst.setString(2,genAddr);
-			pst.setString(3,genHost);
-			pst.setString(4,genCondition);
-			pst.setString(5,genTheme);
-			pst.setInt(6,genParticipantNum);
-			pst.setString(7,genContent);
-			pst.setString(8,genMSum);
+			pst.setString(1,LecDate);
+			pst.setString(2,LecAddr);
+			pst.setString(3,LecTheme);
+			pst.setInt(4,LecParticipantNum);
+			pst.setString(5,LecContent);
 			pst.execute();
 			count++;
 		}

@@ -14,16 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import DB.database;
 import net.sf.json.JSONObject;
 
-//团支部信息
+//填空类
+//团支部建设
 public class part1_1 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("连接Servlet成功");
 		database.connect();
-		
 		int flag = Integer.parseInt(request.getParameter("flag"));
 		if(flag == 0) {
 			try {
@@ -41,27 +40,22 @@ public class part1_1 extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
 	    database.disconnect();
 	}
 	//向前端发送数据库中的数据
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		
 		String Class =  request.getParameter("Class");
-		System.out.println("Class:"+Class);
-		
-		//准备sql语句
-		String sql = "select * from info where Class = ?";
+		//准备sql语句并执行的到ResultSet
+		String sql = "select * from 团支部建设 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);
 		ResultSet set = pst.executeQuery();
-		
-		
-		String basic = "";
+		//准备向前端发送的除Class外的4条信息，并作初始化
+		String basic = "" ;
 		String specialty = "";
 		String innovation = "";
 		String goal = "";
-		//判断数据库中有无数据，若没有则插入一条空数据
+		//判断数据库中无数据，若没有则插入一条空数据
 		if(set.next()) {
 			basic = set.getString("basic");
 			specialty = set.getString("specialty");
@@ -74,7 +68,7 @@ public class part1_1 extends HttpServlet {
 		}
 		else
 			insert(Class);//填空类的界面都需要首先判断结果集是否为空
-		//准备向前端发送的json数据
+		//准备向前端发送的JSON数据
 		JSONObject write = new JSONObject();	
 		write.put("basic", basic);
 		write.put("specialty", specialty);
@@ -83,15 +77,15 @@ public class part1_1 extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out= response.getWriter();
-		out.write(write.toString());    
+		out.write(write.toString()); 
+		//关闭数据库变量
 		pst.close();
 		set.close();
 
 	}
 	//更新数据库中的班级信息
 	public void update(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		
-		//从json中获取Class，用于修改对应班级的信息
+		//从JSON中获取填空类界面的信息，用于修改对应班级的信息
 		String Class = request.getParameter("Class");
 		String basic = request.getParameter("basic");
 		String specialty = request.getParameter("specialty");
@@ -102,9 +96,8 @@ public class part1_1 extends HttpServlet {
 		System.out.println("specialty:"+specialty);
 		System.out.println("innovation:"+innovation);
 		System.out.println("goal:"+goal);
+		//准备sql并执行update
 		String sql = "update 团支部建设 set basic = ?, specialty = ?, innovation = ?, goal = ?  where Class= ?";
-		
-
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,basic);
 		pst.setString(2,specialty);
@@ -112,7 +105,7 @@ public class part1_1 extends HttpServlet {
 		pst.setString(4, goal);
 		pst.setString(5, Class);
 		pst.executeUpdate();
-		
+		//关闭数据库有关变量
 		pst.close();
 	}
 	//向数据库中插入空语句

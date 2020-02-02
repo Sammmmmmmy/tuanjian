@@ -1,6 +1,7 @@
 package test;
 
 import java.io.File;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -10,12 +11,14 @@ import DB.database;
 import net.sf.json.JSONArray;
 
 public class main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		//idDeleteTest();
 		//String url = "C:\\Users\\dell\\Desktop\\1.jpg";
 		//FileDeleteTest(url);
 		//sqlDeleteTest();
-		GetDate();
+//		sizeOfJSONArray();
+		//sizeofSet();
+		numbertest();
 	}
 	//JSONArray能够存储不同类型的数据
 	public static void JSONArrayTest() {
@@ -66,6 +69,34 @@ public class main {
 			test = set.getInt(0)+"";
 		}
 		database.disconnect();
+	}
+	//JSONArray的大小
+	public static void sizeOfJSONArray() {
+		JSONArray array = new JSONArray();
+		System.out.println(array.size());
+	}
+	//ResultSize的大小
+	public static void sizeofSet() throws SQLException {
+		String sql = "select * from login";
+		database.connect();
+		ResultSet set = database.executeQuery(sql);
+
+		
+		while(set.next())
+			System.out.println(set.getString("pwd"));
+		set.close();
+		database.disconnect();
+
+	}
+	//数据库数字的测试
+	//结论：当数字列为空时通过查询得到内容为0
+	public static void numbertest() throws SQLException {
+		String sql = "select * from test";
+		database.connect();
+		ResultSet set = database.executeQuery(sql);
+		while(set.next()) {
+			System.out.println(set.getInt("id"));
+		}
 	}
 	
 }

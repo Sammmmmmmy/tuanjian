@@ -43,13 +43,13 @@
                     <button class="btn btn-primary" onclick="login()">登录</button>
                     <p class="form-group-display">
                 </div>
-               
+
             </div>
         </div>
     </div>
     <div class="nav" id="nav">
         <button class="nav-part" id="pre" onclick="pre()">前言及基本资料></button>
-        <a href="../pages/pre-1.html" target="iframe1" id="pre-1" class="nav-part-a" >工作日志</a>
+        <a href="../pages/pre-1.html" target="iframe1" id="pre-1" class="nav-part-a">工作日志</a>
         <a href="../pages/pre-2.html" target="iframe1" id="pre-2" class="nav-part-a" hidden>中国共青团团歌</a>
         <a href="../pages/pre-3.html" target="iframe1" id="pre-3" class="nav-part-a" hidden>入团誓词</a>
         <a href="../pages/pre-4.html" target="iframe1" id="pre-4" class="nav-part-a" hidden>填写说明</a>
@@ -226,26 +226,32 @@
     }
 
     function login() {
-        // $.ajax({
-        //     type: 'POST',
-        //     url: '',
-        //     data: {
-        //这里应该放置密码和班级，送给后台比对
-        //     },
-        //     success: function (res) {
-                var leaClass = document.getElementById("classSelect").value;
-                var loginMsg = "登录的班级是" + leaClass;
-                console.log(loginMsg);
-                sessionStorage.setItem("class",leaClass);
-                console.log(leaClass);
-                $("#login").hide();
-                $("#nav").show();
-                $("#iframe1").show();
-        //     },
-        //     error:function(err){
-        //         alert("密码不正确，请您再次登录，或者向管理员询问密码！");
-        //     }
-        // })
+        var leaClass = document.getElementById("classSelect").value;
+        var loginMsg = "登录的班级是" + leaClass;
+        $.ajax({
+            type: 'POST',
+            url: 'servlet/login',
+            data: {
+                //这里应该放置密码和班级，送给后台比对
+                "user": leaClass,
+                "password": document.getElementById("password").value
+            },
+            success: function (data, status) {
+                if (data.pass == 0) {
+                    sessionStorage.setItem("class", leaClass);
+                    console.log(leaClass);
+                    $("#login").hide();
+                    $("#nav").show();
+                    $("#iframe1").show();
+                }
+                else{
+                    alert("密码错误，请再次尝试，或者询问管理员~");
+                }
+            },
+            error: function (data, status) {
+                alert("密码不正确，请您再次登录，或者向管理员询问密码！");
+            }
+        })
 
     }
 </script>

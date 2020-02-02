@@ -16,8 +16,8 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 //重复类
-//支部大会-会议记录
-public class part2_3 extends HttpServlet {
+//支部委员会-会议记录
+public class part2_6 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
@@ -28,58 +28,56 @@ public class part2_3 extends HttpServlet {
 			try {
 				show(request,response);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		else
 			try {
 				update(request,response);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		database.disconnect();
 	}
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String Class = request.getParameter("Class");
-		String sql = "select * from 支部大会-会议记录 where 班级 = ?";
+		String sql = "select * from 支部委员会-会议记录 where 班级 = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
 		//准备向前端发送的JSONArray
 		JSONArray array = new JSONArray();
-		JSONObject genJSON;
+		JSONObject comJSON;
 		int size = 0;
 		//准备除Class外的8条数据
-		String genDate;
-		String genAddr;
-		String genHost;
-		String genTheme;
-		int genParticipantNum;
-		String genContent;
-		String genCondition;
-		String genMSum;
+		String comDate;
+		String comAddr;
+		String comHost;
+		String comTheme;
+		int comParticipantNum;
+		String comContent;
+		String comCondition;
+		String comMSum;
 		while(set.next()) {
-			genJSON = new JSONObject();
-			genDate = set.getString("genDate");
-			genAddr = set.getString("genAddr");
-			genHost = set.getString("genHost");
-			genTheme = set.getString("genTheme");
-			genParticipantNum = set.getInt("genParticipantNum");
-			genContent = set.getString("genContent");
-			genCondition = set.getString("genCondition");
-			genMSum = set.getString("genMSum");
-			//填充每一个genJOSN
-			genJSON.put("genDate", genDate);
-			genJSON.put("genAddr",genAddr);
-			genJSON.put("genHost",genHost);
-			genJSON.put("genTheme",genTheme);
-			genJSON.put("genParticipantNum",genParticipantNum);
-			genJSON.put("genContent",genContent);
-			genJSON.put("genCondition",genCondition);
-			genJSON.put("genMSum",genMSum);
+			comJSON = new JSONObject();
+			comDate = set.getString("comDate");
+			comAddr = set.getString("comAddr");
+			comHost = set.getString("comHost");
+			comTheme = set.getString("comTheme");
+			comParticipantNum = set.getInt("comParticipantNum");
+			comContent = set.getString("comContent");
+			comCondition = set.getString("comCondition");
+			comMSum = set.getString("comMSum");
+			//填充每一个comJOSN
+			comJSON.put("comDate", comDate);
+			comJSON.put("comAddr",comAddr);
+			comJSON.put("comHost",comHost);
+			comJSON.put("comTheme",comTheme);
+			comJSON.put("comParticipantNum",comParticipantNum);
+			comJSON.put("comContent",comContent);
+			comJSON.put("comCondition",comCondition);
+			comJSON.put("comMSum",comMSum);
 			//添加至array
-			array.add(genJSON);
+			array.add(comJSON);
 			size++;
 		}
 		JSONObject write = new JSONObject();
@@ -111,38 +109,38 @@ public class part2_3 extends HttpServlet {
 	public void rewrite(String Class,JSONArray array) throws SQLException {
 		int size = array.size();
 		int count = 0;
-		JSONObject genJSON;
-		String genDate;
-		String genAddr;
-		String genHost;
-		String genCondition;
-		String genTheme;
-		int genParticipantNum;
-		String genContent;
-		String genMSum;
+		JSONObject comJSON;
+		String comDate;
+		String comAddr;
+		String comHost;
+		String comName;
+		String comTheme;
+		int comParticipantNum;
+		String comContent;
+		String comMSum;
 		//准备pst
-		String sql = "insert into 支部大会-会议记录 values (?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into 支部大会-会议记录 values (?,?,?,?,?,?)";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(9,Class);
 		while(count!=size) {
-			genJSON = array.getJSONObject(count);
-			genDate = genJSON.getString("genDate");
-			genAddr = genJSON.getString("genAddr");
-			genHost = genJSON.getString("genHost");
-			genCondition = genJSON.getString("genCondition");
-			genTheme = genJSON.getString("genTheme");
-			genParticipantNum = genJSON.getInt("genParticipantNum");
-			genContent = genJSON.getString("genContent");
-			genMSum = genJSON.getString("genMSum");
+			comJSON = array.getJSONObject(count);
+			comDate = comJSON.getString("comDate");
+			comAddr = comJSON.getString("comAddr");
+			comHost = comJSON.getString("comHost");
+			comName = comJSON.getString("comName");
+			comTheme = comJSON.getString("comTheme");
+			comParticipantNum = comJSON.getInt("comParticipantNum");
+			comContent = comJSON.getString("comContent");
+			comMSum = comJSON.getString("comMSum");
 			//填充pst并执行
-			pst.setString(1,genDate);
-			pst.setString(2,genAddr);
-			pst.setString(3,genHost);
-			pst.setString(4,genCondition);
-			pst.setString(5,genTheme);
-			pst.setInt(6,genParticipantNum);
-			pst.setString(7,genContent);
-			pst.setString(8,genMSum);
+			pst.setString(1,comDate);
+			pst.setString(2,comAddr);
+			pst.setString(3,comHost);
+			pst.setString(4,comName);
+			pst.setString(5,comTheme);
+			pst.setInt(6,comParticipantNum);
+			pst.setString(7,comContent);
+			pst.setString(8,comMSum);
 			pst.execute();
 			count++;
 		}

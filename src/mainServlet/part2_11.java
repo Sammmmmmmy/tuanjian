@@ -22,7 +22,7 @@ import utilities.Base64utilities;
 
 //单界面多图片类
 //团支部风采
-public class part1_7 extends HttpServlet {
+public class part2_11 extends HttpServlet {
 	//后期要改成服务器地址
 	private String dir = "E:\\团建web图片\\";
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,27 +50,29 @@ public class part1_7 extends HttpServlet {
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String Class = request.getParameter("Class");
 		//准备sql并执行得到结果集
-		String sql = "select * from 团支部风采 where Class = ?";
+		String sql = "select * from 本学年注册情况记录粘贴处 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
 		//imagebase64数组
 		JSONArray array = new JSONArray();
+		int size = 0; 
 		//图片的url和base64
 		String imageurl;
 		String imagebase64;
-		//遍历结果集获取图片url和base64
+		//遍历set获取图片地址和base64
 		while(set.next()) {
 			//获取数据库中的图片地址
 			imageurl = set.getString("imageurl");
 			//根据url获取服务器保存的图片的base64
 			imagebase64 = Base64utilities.ImageToBase64(imageurl);
-			//添加至数组
+			//添加至array中
 			array.add(imagebase64);
+			size++;
 		}
-		//发送给前端
+		//发送到前端
 		JSONObject write = new JSONObject();
-		write.put("size",array.size());
+		write.put("size",size);
 		write.put("array", array);
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
@@ -78,7 +80,6 @@ public class part1_7 extends HttpServlet {
 		out.write(write.toString());
 		pst.close();
 		set.close();
-		
 	}
 	public void update(HttpServletRequest request, HttpServletResponse response) throws SQLException  {
 		//从前端获取Class和array
@@ -89,11 +90,10 @@ public class part1_7 extends HttpServlet {
 		//将图片写入数据库和服务器
 		//用上传图片的时间和array中图片的顺序进行命名
 		rewrite(Class,array);
-		
 	}
 	public void clear(String Class) throws SQLException {
 		//查询班级所有图片并从服务器上删除
-		String selectsql = "select * from 团支部风采 where Class = ?";
+		String selectsql = "select * from 本学年注册情况记录粘贴处 where Class = ?";
 		PreparedStatement pst = database.getpst(selectsql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
@@ -105,10 +105,10 @@ public class part1_7 extends HttpServlet {
 		pst.close();//可能有bug
 		set.close();
 		//从数据库中删除所有的图片地址
-		String sql = "DELETE FROM 团支部风采 WHERE Class = ?";
+		String sql = "DELETE FROME 本学年注册情况记录粘贴处  WHERE Class = ?";
 		pst = database.getpst(sql);
 		pst.setString(1, Class);
-		pst.execute();
+		database.executeUpdate(sql);
 		pst.close();
 	}
 	//生成图片的地址并写入数据库
@@ -120,13 +120,13 @@ public class part1_7 extends HttpServlet {
 		String date = df.format(new Date());
 		String[] urls = new String[size];
 		for(int i = 0;i<size;i++)
-			urls[i] = this.dir+date+"_"+i+".jpg";
+			urls[i] = dir+date+i+".jpg";
 		//准备sql语句
-		String sql = "INSERT INTO 团支部风采 VALUES (?,?)";
+		String sql = "INSERT INTO 本学年注册情况记录粘贴处 VALUES (?,?)";
 		PreparedStatement pst = database.getpst(sql);
-		pst.setString(2, Class);
 		for(int i = 0;i<size;i++) {
 			pst.setString(1, urls[i]);
+			pst.setString(2, Class);
 			pst.execute();
 		}
 		pst.close();
@@ -154,5 +154,4 @@ public class part1_7 extends HttpServlet {
 //		pst.close();
 //		
 //	}
-
 }

@@ -13,6 +13,7 @@ import DB.database;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+//重复类
 //团员奖惩记录
 public class part1_22 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,10 +44,11 @@ public class part1_22 extends HttpServlet {
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1, Class);
 		ResultSet set = pst.executeQuery();
-		//准备JOSNarray
+		//准备JSONArray
 		JSONArray array = new JSONArray();
 		JSONObject mandpjson;
 		int size = 0;
+		//准备除Class外的5条信息
 		String stuMPName;
 		String MPContent;
 		String MPlevel;
@@ -88,7 +90,7 @@ public class part1_22 extends HttpServlet {
 		
 	}
 	public void clear(String Class) throws SQLException {
-		String sql = "delete * from where Class = ?";
+		String sql = "delete * from 支部团员奖惩记录 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);
 		pst.execute();

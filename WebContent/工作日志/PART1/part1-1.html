@@ -54,7 +54,6 @@
 
     //在页面加载完毕的时候，使用方法调出数据填入目标
     console.log(Class);
-    //alert(Class);
     window.onload = function () {
         $.ajax({
             type: 'POST',
@@ -65,10 +64,10 @@
             },
             success: function (data, status) {
                 console.log("团支部建设，查询数据");
-                $("#basic").text = data.basic;
-                $("#specialty").text = data.special;
-                $("#innovation").text = data.innovation;
-                $("#goal").text = data.goal;
+                document.getElementById("basic").innerText = data.basic;
+                document.getElementById("specialty").innerText = data.special;
+                document.getElementById("innovation").innerText = data.innovation;
+                document.getElementById("goal").innerText = data.goal;
             },
             error: function (data, status) {
                 alert("查询数据失败，请联系管理员~");
@@ -77,18 +76,18 @@
     }
 
 
-    //如果修改了没有提交就进入其他界面，则warning
     function submit() {
         $.ajax({
             type: 'POST',
             url: 'servlet/part1_1',
             data: {
                 "flag": 1, //发送数据
-                "class": Class,
+                "Class": Class,
                 "basic": $("#basic").text(),
                 "specialty": $("#specialty").text(),
                 "innovation": $("#innovation").text(),
                 "goal": $("#goal").text()
+
             },
             success: function (data, status) {
                 console.log("上传数据成功");

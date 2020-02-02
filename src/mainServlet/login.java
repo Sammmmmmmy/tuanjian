@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DB.database;
+import net.sf.json.JSONObject;
 
 public class login extends HttpServlet {
       
@@ -24,22 +25,28 @@ public class login extends HttpServlet {
 		//向前端发送int类型的pass,pass==1时代表密码正确
 		int pass = 1;
 		//前端数据
-		String Class = request.getParameter("Class");
-		String pwd = request.getParameter("pwd");
+		String user = request.getParameter("user");
+		String password = request.getParameter("password");
+		System.out.println(user);
+		System.out.println(password);
 		//使用选择语句，如果set有值，则pass
 		String sql = "select * from login where Class = ? and pwd = ?";
 		PreparedStatement pst = database.getpst(sql);
 		try {
-			pst.setString(1, Class);
-			pst.setString(2, pwd);
+			pst.setString(1, user);
+			pst.setString(2, password);
 			ResultSet set = pst.executeQuery();
 			if(set.next())
 				pass = 0;
 			else
 				pass = 1;
-			response.setCharacterEncoding("UTF-8");
+			System.out.println(pass);
+			JSONObject write = new JSONObject();	
+			write.put("pass",pass);
+		    response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json; charset=utf-8");
 			PrintWriter out= response.getWriter();
-		    out.write(pass);
+			out.write(write.toString()); 
 			pst.close();
 		    set.close();
 		} catch (Exception e) {

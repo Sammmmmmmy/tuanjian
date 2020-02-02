@@ -15,51 +15,65 @@
         </div>
         <table class="pre-5-table">
             <tr>
-                <td rowspan="5" class="pre-5-td-1"><img src="../images/pre-5-name.png"><br>支部情况<p class="pre-5-font-3">NAME</td>
+                <td rowspan="5" class="pre-5-td-1"><img src="../images/pre-5-name.png"><br>支部情况<p class="pre-5-font-3">
+                        NAME</td>
                 <td>
-                    <tr>
-                        <td>支部名称</td>
-                        <td class="pre-5-content" contenteditable="true"></td>
-                        <td>学院</td>
-                        <td class="pre-5-content" contenteditable="true"></td>
-                    </tr>
-                    <tr>
-                        <td>团支部书记</td>
-                        <td class="pre-5-content" contenteditable="true"></td>
-                        <td>副书记</td>
-                        <td class="pre-5-content" contenteditable="true"></td>
-                    </tr>
-                    <tr>
-                        <td>团支部委员</td>
-                        <td colspan="3" class="pre-5-content" contenteditable="true"></td>
-                    </tr>
-                    <tr>
-                        <td>团员人数</td>
-                        <td class="pre-5-content" contenteditable="true"></td>
-                        <td>保留团籍的党员人数</td>
-                        <td class="pre-5-content" contenteditable="true"></td>
-                    </tr>
+            <tr>
+                <td>支部名称</td>
+                <td class="pre-5-content" contenteditable="true" id="lea-name"></td>
+                <td>学院</td>
+                <td class="pre-5-content" contenteditable="true" id="college"></td>
+            </tr>
+            <tr>
+                <td>团支部书记</td>
+                <td class="pre-5-content" contenteditable="true" id="lea-br-sect"></td>
+                <td>副书记</td>
+                <td class="pre-5-content" contenteditable="true" id="lea-br-desect"></td>
+            </tr>
+            <tr>
+                <td>团支部委员</td>
+                <td colspan="3" class="pre-5-content" contenteditable="true" id="lea-br-mem"></td>
+            </tr>
+            <tr>
+                <td>团员人数</td>
+                <td class="pre-5-content" contenteditable="true" id="lea-mem-num"></td>
+                <td>保留团籍的党员人数</td>
+                <td class="pre-5-content" contenteditable="true" id="re-lea-mem-num"></td>
+            </tr>
+            </td>
+            </tr>
+            <tr>
+                <td class="pre-5-td-1"><img src="../images/pre-5-securetary.png"><br>支部logo/口号<p class="pre-5-font-3">
+                        SECURETARY</p>
+                </td>
+                <td colspan="6" class="pre-5-content" style="height: 150px;" contenteditable="true" id="lea-br-logo">
                 </td>
             </tr>
             <tr>
-                <td class="pre-5-td-1"><img src="../images/pre-5-securetary.png"><br>支部logo/口号<p class="pre-5-font-3">SECURETARY</p></td>
-                <td colspan="6" class="pre-5-content" style="height: 150px;" contenteditable="true"></td>
+                <td class="pre-5-td-1"><img src="../images/pre-5-chat-groups.png"><br>QQ群/微信群/其他<p class="pre-5-font-3">
+                        CHAT GROUPS</p>
+                </td>
+                <td colspan="6" class="pre-5-content" style="height: 150px;" contenteditable="true" id="chat-groups">
+                </td>
             </tr>
             <tr>
-                <td class="pre-5-td-1"><img src="../images/pre-5-chat-groups.png"><br>QQ群/微信群/其他<p class="pre-5-font-3">CHAT GROUPS</p></td>
-                <td colspan="6"  class="pre-5-content" style="height: 150px;" contenteditable="true"></td>
+                <td class="pre-5-td-1"><img src="../images/pre-5-address.png"><br>所在校区<p class="pre-5-font-3">ADDRESS
+                    </p>
+                </td>
+                <td colspan="6" class="pre-5-content" style="height: 150px;" contenteditable="true" id="campus"></td>
             </tr>
             <tr>
-                <td class="pre-5-td-1"><img src="../images/pre-5-address.png"><br>所在校区<p class="pre-5-font-3">ADDRESS</p></td>
-                <td colspan="6" class="pre-5-content" style="height: 150px;" contenteditable="true"></td>
+                <td class="pre-5-td-1"><img src="../images/pre-5-contact.png"><br>联系人&联系电话<p class="pre-5-font-3">
+                        CONTACT</p>
+                </td>
+                <td colspan="6" class="pre-5-content" style="height: 150px;" contenteditable="true" id="contacts"></td>
             </tr>
             <tr>
-                <td class="pre-5-td-1"><img src="../images/pre-5-contact.png"><br>联系人&联系电话<p class="pre-5-font-3">CONTACT</p></td>
-                <td colspan="6" class="pre-5-content" style="height: 150px;" contenteditable="true"></td>
-            </tr>
-            <tr>
-                <td class="pre-5-td-1"><img src="../images/pre-5-e-mail.png"><br>其他联系方式<p class="pre-5-font-3">E-MAIL</p></td>
-                <td colspan="6"  class="pre-5-content" style="height: 150px;border: none;" contenteditable="true"></td>
+                <td class="pre-5-td-1"><img src="../images/pre-5-e-mail.png"><br>其他联系方式<p class="pre-5-font-3">E-MAIL
+                    </p>
+                </td>
+                <td colspan="6" class="pre-5-content" style="height: 150px;border: none;" contenteditable="true"
+                    id="other-contacts"></td>
             </tr>
         </table>
         <div class="buttons">
@@ -70,22 +84,89 @@
 </body>
 <script src="../scripts/jquery.js"></script>
 <script>
-window.onload=function(){
-    showInfor();
-}
+    var Class = sessionStorage.getItem("class");
 
-function showInfor(){
-    $.ajax({
-        type:"POST",
-        url:"",
-        data:{
+    window.onload = function () {
+        show();
+    }
 
-        }
+    function show() {
+        $.ajax({
+            type: "POST",
+            url: "servlet/info",
+            data: {
+                "Class": Class,
+                "flag": 0
+            },
+            success: function (data, status) {
+                document.getElementById("lea-name").innerText = data.leaName;
+                document.getElementById("college").innerText = data.college;
+                document.getElementById("lea-br-sect").innerText = data.leaBrSect;
+                document.getElementById("lea-br-desect").innerText = data.leaBrdeSect;
+                document.getElementById("lea-br-mem").innerText = data.leaBrMem;
+                document.getElementById("lea-mem-num").innerText = data.leaMemNum;
+                document.getElementById("re-lea-mem-num").innerText = data.reLeaMemNum;
+                document.getElementById("lea-br-logo").innerText = data.leaBrLogo;
+                document.getElementById("chat-groups").innerText = data.chatGroups;
+                document.getElementById("campus").innerText = data.campus;
+                document.getElementById("contacts").innerText = data.contacts;
+                document.getElementById("other-contacts").innerText = data.otherContacts;
+            },
+            error: function (data, status) {
+                alert("出错啦，找管理员来处理把~");
+            }
+        });
+    }
+
+    function submit() {
+
+        var leaName = document.getElementById("lea-name").innerText;
+        var college = document.getElementById("college").innerText;
+        var leaBrSect = document.getElementById("lea-br-sect").innerText;
+        var leaBrdeSect = document.getElementById("lea-br-desect").innerText;
+        var leaBrMem = document.getElementById("lea-br-mem").innerText;
+        var leaMemNum = document.getElementById("lea-mem-num").innerText;
+        var reLeaMemNum = document.getElementById("re-lea-mem-num").innerText;
+        var leaBrLogo = document.getElementById("lea-br-logo").innerText;
+        var chatGroups = document.getElementById("chat-groups").innerText;
+        var campus = document.getElementById("campus").innerText;
+        var contacts = document.getElementById("contacts").innerText;
+        var otherContacts = document.getElementById("other-contacts").innerText;
+
+        $.ajax({
+            type: "POST",
+            url: "servlet/info",
+            data: {
+                "Class": Class,
+                "flag": 1,
+                "leaName": leaName,
+                "college": college,
+                "leaBrSect": leaBrSect,
+                "leaBrdesect": leaBrdeSect,
+                "leaBrMem": leaBrMem,
+                "leaMemNum": leaMemNum,
+                "reLeaMemNum": reLeaMemNum,
+                "leaBrLogo": leaBrLogo,
+                "chatGroups": chatGroups,
+                "campus": campus,
+                "contacts": contacts,
+                "otherContacts": otherContacts
+
+            },
+            success: function (data, status) {
+                console.log("上传团支部资料成功");
+            },
+            error: function (data, status) {
+                alert("出错啦，找管理员来处理把~");
+            }
+        });
+
+    }
+
+    $(window).bind('beforeunload', function () {
+        submit();
     });
-}
 
-function submitInfor(){
-
-}
 </script>
+
 </html>

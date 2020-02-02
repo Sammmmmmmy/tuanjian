@@ -131,6 +131,10 @@
 
                     count++;
                 }
+                if(data.size==0)
+                {
+                    add();
+                }
             },
             error: function (data, status) {
                 alert("出错啦，找管理员处理把");
@@ -237,9 +241,9 @@
         count++;
     }
 
-    // $(window).bind('beforeunload', function () {
-    //     submit();
-    // });
+    $(window).bind('beforeunload', function () {
+        submit();
+    });
 
 
 </script>

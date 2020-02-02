@@ -2,8 +2,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>3-会议记录</title>
-    <link type="text/css" href="../styles/part2/3.css" rel="stylesheet">
+    <title>6-会议记录</title>
+    <link type="text/css" href="../styles/part2/6.css" rel="stylesheet">
+    <!--这里3.css也一样-->
     <link type="text/css" href="../styles/all.css" rel="stylesheet">
 </head>
 
@@ -19,35 +20,33 @@
             <div id="outside">
                 <table cellspacing="0">
                     <tr>
-                        <td class="td-2" style="font-weight: bold;color: #255e95;">时间</td>
+                        <td class="td-2">时间</td>
                         <td contenteditable="true" class="td-1"></td>
-                        <td class="td-2" style="font-weight: bold;color: #255e95;">地点</td>
+                        <td class="td-2">地点</td>
                         <td contenteditable="true" class="td-1"></td>
-                        <td class="td-1" style="font-weight: bold;color: #255e95;">主持人/组织人</td>
+                        <td class="td-2">主持人</td>
                         <td contenteditable="true"></td>
                     </tr>
                     <tr>
-                        <td style="text-align: left;font-weight: bold;color: #255e95;">主题</td>
+                        <td style="text-align: left;">名称</td>
                         <td colspan="5" contenteditable="true"></td>
                     </tr>
                     <tr>
-                        <td class="td-3" style="font-weight: bold;color: #255e95;">参加人员（人数）</td>
+                        <td style="text-align: left;">主题</td>
                         <td colspan="5" contenteditable="true"></td>
                     </tr>
                     <tr>
-                        <td style="text-align: left;font-weight: bold;color:#255e95;">主要内容</td>
+                        <td class="td-3">参加人员（人数）</td>
+                        <td colspan="5" contenteditable="true"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">主要内容</td>
                     </tr>
                     <tr>
                         <td colspan="10" style="height: 150px;" contenteditable="true"></td>
                     </tr>
                     <tr>
-                        <td style="text-align: left;font-weight: bold;color:#255e95;">会议情况</td>
-                    </tr>
-                    <tr>
-                        <td colspan="10" style="height: 150px;" contenteditable="true"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;font-weight: bold;color:#255e95;">会议总结</td>
+                        <td style="text-align: left;">会议总结</td>
                     </tr>
                     <tr>
                         <td colspan="10" style="height: 150px;" contenteditable="true"></td>
@@ -61,7 +60,7 @@
             </div>
 
             <div class="buttons">
-                <button id="submit" onclick="submit()">提交</button>
+                <button id="submit">提交</button>
             </div>
         </div>
     </div>
@@ -82,7 +81,7 @@
     function show() {
         $.ajax({
             type: "POST",
-            url: "servlet/part2_3",
+            url: "servlet/part2_8",
             data: {
                 "Class": Class,
                 "flag": 0
@@ -92,8 +91,8 @@
                 for (var i = 0; i < size; i++) {
                     count++;
                     var Table = document.createElement('table');
-                    Table.style.marginBottom="40px";
                     Table.cellSpacing = "0";
+                    Table.style.marginBottom="40px";
 
                     var tr1 = document.createElement('tr');
                     var td11 = document.createElement('td');
@@ -105,7 +104,7 @@
                     td12.contentEditable = true;
                     td12.id = "date-" + count;
                     td12.className = "td-1";
-                    td12.innerText = data.array[i].genDate;
+                    td12.innerText = data.array[i].grpDate;
                     var td13 = document.createElement('td');
                     td13.className = "td-2";
                     td13.style.fontWeight = "bold";
@@ -115,23 +114,38 @@
                     td14.contentEditable = true;
                     td14.id = "addr-" + count;
                     td14.className = "td-1";
-                    td14.innerText = data.array[i].genAddr;
+                    td14.innerText = data.array[i].grpAddr;
                     var td15 = document.createElement('td');
-                    td15.className = "td-1";
+                    td15.className = "td-2";
                     td15.style.fontWeight = "bold";
                     td15.style.color = "#255e95";
-                    td15.innerText = "主持人/组织人";
+                    td15.innerText = "主持人";
                     var td16 = document.createElement('td');
                     td16.contentEditable = true;
                     td16.id = "host-" + count;
                     td16.className = "td-1";
-                    td16.innerText = data.array[i].genHost;
+                    td16.innerText = data.array[i].grpHost;
                     tr1.append(td11);
                     tr1.append(td12);
                     tr1.append(td13);
                     tr1.append(td14);
                     tr1.append(td15);
                     tr1.append(td16);
+
+                    var tr12 = document.createElement('tr');
+                    var td121 = document.createElement('td');
+                    td121.style.textAlign = "left";
+                    td121.style.fontWeight = "bold";
+                    td121.style.color = "#255e95";
+                    td121.innerText = "名称";
+                    var td122 = document.createElement('td');
+                    td122.colSpan = "5";
+                    td122.contentEditable = true;
+                    td122.id = "name-" + count;
+                    td122.className= "td-1";
+                    td122.innerText = data.array[i].grpTheme;
+                    tr12.append(td121);
+                    tr12.append(td122);
 
                     var tr2 = document.createElement('tr');
                     var td21 = document.createElement('td');
@@ -143,10 +157,12 @@
                     td22.colSpan = "5";
                     td22.contentEditable = true;
                     td22.id = "theme-" + count;
-                    td22.className="td-1";
-                    td22.innerText = data.array[i].genTheme;
+                    td22.className= "td-1";
+                    td22.innerText = data.array[i].grpTheme;
                     tr2.append(td21);
                     tr2.append(td22);
+
+
 
                     var tr3 = document.createElement('tr');
                     var td31 = document.createElement('td');
@@ -156,8 +172,8 @@
                     td32.colSpan = "5";
                     td32.contentEditable = true;
                     td32.id = "participant-num-" + count;
-                    td32.className="td-1";
-                    td32.innerText = data.array[i].genParticipantNum;
+                    td32.className= "td-1";
+                    td32.innerText = data.array[i].grpParticipantNum;
                     tr3.append(td31);
                     tr3.append(td32);
 
@@ -175,8 +191,8 @@
                     td51.contentEditable = true;
                     td51.style.height = "150px";
                     td51.id = "content-" + count;
-                    td51.className="td-1";
-                    td51.innerText = data.array[i].genContent;
+                    td51.className= "td-1";
+                    td51.innerText = data.array[i].grpContent;
                     tr5.append(td51);
 
                     var tr6 = document.createElement('tr');
@@ -184,7 +200,7 @@
                     td61.style.textAlign = "left";
                     td61.style.fontWeight = "bold";
                     td61.style.color = "#255e95";
-                    td61.innerText = "会议情况";
+                    td61.innerText = "会议总结";
                     tr6.append(td61);
 
                     var tr7 = document.createElement('tr');
@@ -192,38 +208,19 @@
                     td71.colSpan = "10";
                     td71.contentEditable = true;
                     td71.style.height = "150px";
-                    td71.id = "condition-" + count;
-                    td71.className="td-1";
-                    td71.innerText = data.array[i].genCondition;
+                    td71.id = "sum-" + count;
+                    td71.className= "td-1";
+                    td71.innerText = data.array[i].srpMSum;
                     tr7.append(td71);
 
-                    var tr8 = document.createElement('tr');
-                    var td81 = document.createElement('td');
-                    td81.style.textAlign = "left";
-                    td81.style.fontWeight = "bold";
-                    td81.style.color = "#255e95";
-                    td81.innerText = "会议总结";
-                    tr8.append(td81);
-
-                    var tr9 = document.createElement('tr');
-                    var td91 = document.createElement('td');
-                    td91.colSpan = "10";
-                    td91.contentEditable = true;
-                    td91.style.height = "150px";
-                    td91.id = "sum-" + count;
-                    td91.className="td-1";
-                    td91.innerText = data.array[i].genMSum;
-                    tr9.append(td91);
-
                     Table.append(tr1);
+                    Table.append(tr12);
                     Table.append(tr2);
                     Table.append(tr3);
                     Table.append(tr4);
                     Table.append(tr5);
                     Table.append(tr6);
                     Table.append(tr7);
-                    Table.append(tr8);
-                    Table.append(tr9);
 
 
                     document.getElementById("outside").append(Table);
@@ -248,14 +245,14 @@
                 flag = false;
 
 
-            arrayItem.genDate = document.getElementById("#date-" + count).innerText;
-            arrayItem.genAddr = document.getElementById("#addr-" + count).innerText;
-            arrayItem.genHost = document.getElementById("#host-" + count).innerText;
-            arrayItem.genTheme = document.getElementById("#theme-" + count).innerText;
-            arrayItem.genParticipantNum = document.getElementById("#participant-num-" + count).innerText;
-            arrayItem.genContent = document.getElementById("#content-" + count).innerText;
-            arrayItem.genCondition = document.getElementById("#condition-" + count).innerText;
-            arrayItem.genMSum = document.getElementById("#sum-" + count).innerText;
+            arrayItem.grpDate = document.getElementById("#date-" + count).innerText;
+            arrayItem.grpAddr = document.getElementById("#addr-" + count).innerText;
+            arrayItem.grpHost = document.getElementById("#host-" + count).innerText;
+            arrayItem.grpTheme = document.getElementById("#theme-" + count).innerText;
+            arrayItem.grpParticipantNum = document.getElementById("#participant-num-" + count).innerText;
+            arrayItem.grpContent = document.getElementById("#content-" + count).innerText;
+            arrayItem.grpCondition = document.getElementById("#condition-" + count).innerText;
+            arrayItem.grpMSum = document.getElementById("#sum-" + count).innerText;
 
             if (flag) {
                 Array.push(arrayItem);
@@ -266,17 +263,17 @@
 
         $.ajax({
             type: "POST",
-            url: "servlet/part2_3",
+            url: "servlet/part2_8",
             data: {
                 "Class": Class,
                 "flag": 1,
                 "array": JsonArr
             },
             success: function (data, status) {
-                console.log("part2-3上传成功");
+                console.log("part2-8上传成功");
             },
             error: function (data, status) {
-                alert("part2-3出错啦，快找管理员处理");
+                alert("part2-8出错啦，快找管理员处理");
             }
         });
 
@@ -308,10 +305,10 @@
         td14.id = "addr-" + count;
         td14.className = "td-1";
         var td15 = document.createElement('td');
-        td15.className = "td-1";
+        td15.className = "td-2";
         td15.style.fontWeight = "bold";
         td15.style.color = "#255e95";
-        td15.innerText = "主持人/组织人";
+        td15.innerText = "主持人";
         var td16 = document.createElement('td');
         td16.contentEditable = true;
         td16.id = "host-" + count;
@@ -323,6 +320,20 @@
         tr1.append(td15);
         tr1.append(td16);
 
+        var tr12 = document.createElement('tr');
+        var td121 = document.createElement('td');
+        td121.style.textAlign = "left";
+        td121.style.fontWeight = "bold";
+        td121.style.color = "#255e95";
+        td121.innerText = "名称";
+        var td122 = document.createElement('td');
+        td122.colSpan = "5";
+        td122.contentEditable = true;
+        td122.id = "name-" + count;
+        td122.className= "td-1";
+        tr12.append(td121);
+        tr12.append(td122);
+
         var tr2 = document.createElement('tr');
         var td21 = document.createElement('td');
         td21.style.textAlign = "left";
@@ -333,6 +344,7 @@
         td22.colSpan = "5";
         td22.contentEditable = true;
         td22.id = "theme-" + count;
+        td22.className= "td-1";
         tr2.append(td21);
         tr2.append(td22);
 
@@ -344,7 +356,7 @@
         td32.colSpan = "5";
         td32.contentEditable = true;
         td32.id = "participant-num-" + count;
-        td32.className="td-1";
+        td32.className= "td-1";
         tr3.append(td31);
         tr3.append(td32);
 
@@ -362,7 +374,7 @@
         td51.contentEditable = true;
         td51.style.height = "150px";
         td51.id = "content-" + count;
-        td51.className="td-1";
+        td51.className= "td-1";
         tr5.append(td51);
 
         var tr6 = document.createElement('tr');
@@ -370,7 +382,7 @@
         td61.style.textAlign = "left";
         td61.style.fontWeight = "bold";
         td61.style.color = "#255e95";
-        td61.innerText = "会议情况";
+        td61.innerText = "会议总结";
         tr6.append(td61);
 
         var tr7 = document.createElement('tr');
@@ -378,37 +390,18 @@
         td71.colSpan = "10";
         td71.contentEditable = true;
         td71.style.height = "150px";
-        td71.id = "condition-" + count;
-        td71.className="td-1";
+        td71.id = "sum-" + count;
+        td71.className= "td-1";
         tr7.append(td71);
 
-        var tr8 = document.createElement('tr');
-        var td81 = document.createElement('td');
-        td81.style.textAlign = "left";
-        td81.style.fontWeight = "bold";
-        td81.style.color = "#255e95";
-        td81.innerText = "会议总结";
-        tr8.append(td81);
-
-        var tr9 = document.createElement('tr');
-        var td91 = document.createElement('td');
-        td91.colSpan = "10";
-        td91.contentEditable = true;
-        td91.style.height = "150px";
-        td91.id = "sum-" + count;
-        td91.className="td-1";
-        tr9.append(td91);
-
         Table.append(tr1);
+        Table.append(tr12);
         Table.append(tr2);
         Table.append(tr3);
         Table.append(tr4);
         Table.append(tr5);
         Table.append(tr6);
         Table.append(tr7);
-        Table.append(tr8);
-        Table.append(tr9);
-
         document.getElementById("outside").append(Table);
     }
 </script>

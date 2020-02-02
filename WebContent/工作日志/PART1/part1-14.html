@@ -40,7 +40,8 @@
                 </tr>
                 <tr rowspan="3">
                     <td colspan="2" style="border: none;">票数统一结果</td>
-                    <td colspan="4" style="border: none;">
+                    <td colspan="4" style="border: none;"></td>
+                </tr>
                 <tr style="border: none;">
                     <td colspan="6" contenteditable="true" style="height: 60px; border: none;" id="1-selTicketNum"></td>
                 </tr>
@@ -51,8 +52,6 @@
                     <td contenteditable="true" style="border:none" id="1-selCounter"></td>
                     <td style="text-align: right; border: none;">监票人：</td>
                     <td contenteditable="true" style="border: none;" id="1-scrutineer"></td>
-                </tr>
-                </td>
                 </tr>
                 <tr rowspan="2">
                     <td colspan="2">选举结果</td>
@@ -94,7 +93,10 @@
             },
             success: function (data, status) {
                 tables.innerHTML = "";
-                for (var i = 0; i < data.array.size; i++) {
+                if(data.size==0){
+                    addTable();
+                }
+                for (var i = 0; i < data.size; i++) {
                     var ttable = document.createElement('table');
                     ttable.className = "record";
                     ttable.cellPadding = "0";
@@ -171,6 +173,9 @@
                     var ttd52 = document.createElement('td');
                     ttd52.colSpan = "4";
                     ttd52.style.border = "none";
+                    ttr5.append(ttd52);
+                    ttable.append(ttr5);
+
                     var ttr521 = document.createElement('tr');
                     ttr521.style.border = "none";
                     var ttd5211 = document.createElement('td');
@@ -179,9 +184,10 @@
                     ttd5211.style.height = "60px";
                     ttd5211.style.border = "none";
                     ttd5211.id = count + "-selTicketNum";
-                    ttd5211.innerText = dtat.array[i].selTicketNum;
+                    ttd5211.innerText=date.array[i].selTicketNum;
                     ttr521.append(ttd5211);
-                    ttd52.append(ttr521);
+                    ttable.append(ttr521);
+
                     var ttr522 = document.createElement('tr');
                     ttr522.style.border = "none";
                     var ttd5221 = document.createElement('td');
@@ -196,7 +202,7 @@
                     ttd5224.style.border = "none";
                     ttd5224.contentEditable = true;
                     ttd5224.id = count + "-selCounter";
-                    ttd5224.innerText = data.array[i].selCounter;
+                    ttd5224.innerText=date.array[i].selCounter;
                     var ttd5225 = document.createElement('td');
                     ttd5225.style.border = "none";
                     ttd5225.style.textAlign = "right";
@@ -205,16 +211,14 @@
                     ttd5226.style.border = "none";
                     ttd5226.contentEditable = true;
                     ttd5226.id = count + "-scrutineer";
-                    ttd5226.innerText = data.array[i].scrutineer;
+                    ttd5226.innerText=date.array[i].scrutineer;
                     ttr522.append(ttd5221);
                     ttr522.append(ttd5222);
                     ttr522.append(ttd5223);
                     ttr522.append(ttd5224);
                     ttr522.append(ttd5225);
                     ttr522.append(ttd5226);
-                    ttd52.append(ttr522);
-                    ttr5.append(ttd52);
-                    ttable.append(ttr5);
+                    ttable.append(ttr522);
 
                     var ttr6 = document.createElement('tr');
                     ttr6.rowSpan = "2";
@@ -336,6 +340,9 @@
         var ttd52 = document.createElement('td');
         ttd52.colSpan = "4";
         ttd52.style.border = "none";
+        ttr5.append(ttd52);
+        ttable.append(ttr5);
+
         var ttr521 = document.createElement('tr');
         ttr521.style.border = "none";
         var ttd5211 = document.createElement('td');
@@ -345,7 +352,8 @@
         ttd5211.style.border = "none";
         ttd5211.id = count + "-selTicketNum";
         ttr521.append(ttd5211);
-        ttd52.append(ttr521);
+        ttable.append(ttr521);
+
         var ttr522 = document.createElement('tr');
         ttr522.style.border = "none";
         var ttd5221 = document.createElement('td');
@@ -366,17 +374,16 @@
         ttd5225.innerText = "监票人：";
         var ttd5226 = document.createElement('td');
         ttd5226.style.border = "none";
-        ttd5224.contentEditable = true;
-        ttd5224.id = count + "-scrutineer";
+        ttd5226.contentEditable = true;
+        ttd5226.id = count + "-scrutineer";
         ttr522.append(ttd5221);
         ttr522.append(ttd5222);
         ttr522.append(ttd5223);
         ttr522.append(ttd5224);
         ttr522.append(ttd5225);
         ttr522.append(ttd5226);
-        ttd52.append(ttr522);
-        ttr5.append(ttd52);
-        ttable.append(ttr5);
+        ttable.append(ttr522);
+
 
         var ttr6 = document.createElement('tr');
         ttr6.rowSpan = "2";

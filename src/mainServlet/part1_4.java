@@ -15,14 +15,12 @@ import DB.database;
 import net.sf.json.JSONObject;
 
 
+//填空类
 //工作事宜一月至十二月
-
-
 public class part1_4 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("连接Servlet成功");
 		database.connect();
@@ -46,17 +44,14 @@ public class part1_4 extends HttpServlet {
 	    database.disconnect();
 	}
 	
-	
 	public void show(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-	
-		//获取json中的班级，用于查询该班级的所有信息
 		String Class =  request.getParameter("Class");
+		//准备sql并执行得到ResultSet
 		String sql = "select * from 工作主题工作时间参与对象效果目标 where Class = ?";
 		PreparedStatement pst = database.getpst(sql);
 		pst.setString(1,Class);
 		ResultSet set = pst.executeQuery();
-		
-		//准备数据库中的信息
+		//准备数据库中除Class外的12条信息
 		String may = "";
 		String jun = "";
 		String jul = "";
@@ -139,13 +134,25 @@ public class part1_4 extends HttpServlet {
 		pst.setString(11,mar);
 		pst.setString(12,Apr);
 		pst.setString(13, Class);
-		pst.executeUpdate();//executeupdate()
+		pst.executeUpdate();
 		pst.close();
 	}
 	//在数据库没有该班级数据的情况下插入一条空语句
 	public void insert(String Class) throws SQLException {
 		String sql = "insert into 工作主题工作时间参与对象效果目标 values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement pst = database.getpst(sql);
+		pst.setString(1,"");
+		pst.setString(2,"");
+		pst.setString(3,"");
+		pst.setString(4,"");
+		pst.setString(5,"");
+		pst.setString(6,"");
+		pst.setString(7,"");
+		pst.setString(8,"");
+		pst.setString(9,"");
+		pst.setString(10,"");
+		pst.setString(11,"");
+		pst.setString(12,"");
 		pst.setString(13,Class);
 		pst.execute();
 		pst.close();

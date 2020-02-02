@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title>12-本学年注册情况记录粘贴处</title>
-    <link type="text/css" href="../styles/part2/12.css" rel="stylesheet">
+    <!-- <link type="text/css" href="../styles/part2/12.css" rel="stylesheet"> -->
+    
+    <link type="text/css" href="../styles/part1/7.css" rel="stylesheet">
     <link type="text/css" href="../styles/all.css" rel="stylesheet">
 </head>
 <body>
@@ -21,53 +23,177 @@
             </div>
         </div>
         <div class="buttons">
-                <button id="change">修改</button>
                 <button id="submit">提交</button>
         </div>
     </div>
 </body>
 
-<script type="text/javascript" src="/scripts/jquery.js"></script>
+<script type="text/javascript" src="../scripts/jquery.js"></script>
 <script>
-    $(document).ready(function () {
-        //为外面的盒子绑定一个点击事件
-        // $("#uploadImgBtn").click(function () {
-            /*
-            1、先获取input标签
-            2、给input标签绑定change事件
-            3、把图片回显
-             */
-            //            1、先回去input标签
-            var $input = $("#file");
-            //            2、给input标签绑定change事件
-            var imgs = document.getElementById("input");
-            $input.on("change", function () {
-                //补充说明：因为我们给input标签设置multiple属性，因此一次可以上传多个文件
-                //获取选择图片的个数
-                var files = this.files;
-                var length = files.length;
-                console.log("选择了" + length + "张图片");
-                //3、回显
-                for (var i = 0; i < length; i++) {
-                    var fr = new FileReader(),
-                        div = document.createElement("div"),
-                        img = document.createElement("img");
+    var Class = sessionStorage.getItem("class");
+    var imgs = document.getElementById("input");
 
-                    div.className = 'pic';
+    var imgBase64 = new Array();//所有上传过的图片都放在这里，包括在界面上删除的
+    var imgConfirm = new Array();//确认这个图片有没有删除，如果没有被删除，数组对应下标为1，删除了的对应下标为0
+    var count = 0;
 
-                    fr.onload = function (e) {
-                        console.log("回显了图片")
-                        img.src = this.result;
-                        div.appendChild(img)
-                        imgs.appendChild(div);
+
+    window.onload = function () {
+        $.ajax({
+            type: "POST",
+            url: "servlet/part2_11",
+            data: {
+                "flag": 0,
+                "Class": Class,
+            },
+            success: function (data, status) {
+                //生成图片div
+                count = 0;
+                if (data.size == 0) { }
+                else {
+                    for (var i = 0; i < data.array.length; i++) {
+                        var outsideDiv = document.createElement("div"),
+                            deleteDiv = document.createElement("div"),
+                            deleteImg = document.createElement("img"),
+                            div = document.createElement("div"),
+                            img = document.createElement("img");
+
+                        outsideDiv.className = 'outside-div';
+                        deleteDiv.className = 'delete';
+                        deleteImg.src = '../images/删除.png';
+                        deleteImg.id = "delete-" + count;
+
+                        deleteImg.onclick = (function (param1) {
+                            var p1 = param1;
+                            return function () {
+                                deletePic(param1);
+                            }
+                        })(count);
+
+                        div.className = 'pic';
+
+                        deleteDiv.append(deleteImg);
+                        outsideDiv.append(deleteDiv);
+
+                        img.src = data.array[i];
+                        imgBase64[count] = data.array[i];
+                        imgConfirm[count] = 1;
+                        div.appendChild(img);
+                        outsideDiv.append(div);
+                        imgs.appendChild(outsideDiv);
+                        count++;
                     }
-                    fr.readAsDataURL(files[i]); //读取文件
                 }
 
-            })
+            },
+            error: function (data, status) {
+                alert("出错啦，找管理员处理把！");
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        /*
+        1、先获取input标签
+        2、给input标签绑定change事件
+        3、把图片回显
+         */
+        //1、先获取input标签
+        var $input = $("#file");
+        //2、给input标签绑定change事件
+        
+        $input.on("change", function () {
+            //补充说明：因为我们给input标签设置multiple属性，因此一次可以上传多个文件
+            //获取选择图片的个数
+            var files = this.files;
+            var length = files.length;
+            console.log("选择了" + length + "张图片");
+            //3、回显
+            for (var i = 0; i < length; i++) {
+                var fr = new FileReader(),
+                    outsideDiv = document.createElement("div"),
+                    deleteDiv = document.createElement("div"),
+                    deleteImg = document.createElement("img"),
+                    div = document.createElement("div"),
+                    img = document.createElement("img");
+
+                outsideDiv.className = 'outside-div';
+                deleteDiv.className = 'delete';
+                deleteImg.src = '../images/删除.png';
+                deleteImg.id = "delete-" + count;
+
+                deleteImg.onclick = (function (param1) {
+                    var p1 = param1;
+                    return function () {
+                        deletePic(param1);
+                    }
+                })(count);
+
+                div.className = 'pic';
+
+                deleteDiv.append(deleteImg);
+                outsideDiv.append(deleteDiv);
+
+
+                fr.onload = function (e) {
+                    console.log("回显了图片")
+                    img.src = this.result;
+                    imgBase64[count] = e.target.result;
+                    imgConfirm[count] = 1;
+                    div.appendChild(img);
+                    outsideDiv.append(div);
+                    imgs.appendChild(outsideDiv);
+                    count++;
+                }
+                fr.readAsDataURL(files[i]); //读取文件
+            }
+
         })
+    })
 
     // })
+
+    function deletePic(num) {
+        var deleteItem = document.getElementById("delete-" + num);
+        var parentNode = deleteItem.parentNode;
+        var grandParentNode = parentNode.parentNode;
+        var imgs = document.getElementById("input");
+        imgs.removeChild(grandParentNode);
+        imgConfirm[num] = 0;
+        console.log(imgBase64);
+    }
+
+    //提交的时候，遍历一下图片数组
+    function submit() {
+        var finalImg = [];
+        for (var i = 1; i <= imgBase64.length; i++) {
+            if (imgConfirm[i] == 1) {
+                finalImg.push(imgBase64[i]);
+            }
+        }
+
+        var jsonArray = JSON.stringify(finalImg);
+
+        $.ajax({
+            type: "POST",
+            url: "servlet/part2_11",
+            data: {
+                "flag": 1,
+                "Class": Class,
+                "array": jsonArray
+            },
+            success: function (data, status) {
+                console.log("图片上传成功");
+            },
+            error: function (data, status) {
+                alert("出错啦，快去找管理员处理把~");
+            }
+        });
+    }
+
+    $(window).bind('beforeunload', function () {
+        submit();
+    });
 </script>
 
 </html>
